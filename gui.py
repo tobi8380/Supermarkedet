@@ -225,16 +225,17 @@ class Supermarket_gui(ttk.Frame):
         self.tabs.add(bog_fane, text='Varer')
         self.tabs.add(sim_fane, text='Simulering')
 
+
         right_frame = ttk.Frame(bog_fane)
         top_frame = ttk.Frame(right_frame)
         data_frame = ttk.Frame(right_frame)
         knap_frame = ttk.Frame(bog_fane)
 
 
-        self.edit_button = ttk.Button(knap_frame, text="Rediger bog", command=self.rediger_bog)
+        self.edit_button = ttk.Button(knap_frame, text="Rediger vare", command=self.rediger_bog)
         self.edit_button.pack(side=tk.TOP)
 
-        self.del_button = ttk.Button(knap_frame, text="Slet bog", command=self.slet_bog)
+        self.del_button = ttk.Button(knap_frame, text="Slet vare", command=self.slet_bog)
         self.del_button.pack(side=tk.TOP)
 
         self.add_button = ttk.Button(knap_frame, text="Tilføj til kurv", command=self.tilfoj_kurv)
