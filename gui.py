@@ -5,7 +5,7 @@ from math import sqrt
 
 from random import randint
 
-from Supermarket_data import Book, Books_data, Employee
+from data import Book, Books_data, Employee
 
 class Supermarket_gui(ttk.Frame):
     def __init__(self, master=None):
