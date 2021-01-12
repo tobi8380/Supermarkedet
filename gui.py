@@ -319,6 +319,6 @@ class Supermarket_gui(ttk.Frame):
 root = tk.Tk()
 root.geometry("800x600")
 
-app = Book_gui(root)
+app = Supermarket_gui(root)
 app.master.title('Bøger')
 app.mainloop()
