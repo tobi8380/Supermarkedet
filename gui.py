@@ -21,11 +21,7 @@ class Supermarket_gui(ttk.Frame):
 
     def login(self):
         dlg = tk.Toplevel()
-
-        but_add_user = ttk.Button(dlg, text="Tilføj Bruger", command=close)
-        but_add_user.grid(column=1,row=3)
-        but_login = ttk.Button(dlg, text="Login", command=change_book)
-        but_login.grid(column=0,row=3)
+        pass
 
     def opdater_tabel(self):
         l = self.data.get_book_list(200)
