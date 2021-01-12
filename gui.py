@@ -222,7 +222,7 @@ class Supermarket_gui(ttk.Frame):
         bog_fane = ttk.Frame(self.tabs)
         sim_fane = ttk.Frame(self.tabs)
 
-        self.tabs.add(bog_fane, text='Bøger')
+        self.tabs.add(bog_fane, text='Varer')
         self.tabs.add(sim_fane, text='Simulering')
 
         right_frame = ttk.Frame(bog_fane)
@@ -320,5 +320,5 @@ root = tk.Tk()
 root.geometry("800x600")
 
 app = Supermarket_gui(root)
-app.master.title('Bøger')
+app.master.title('NETTO')
 app.mainloop()
