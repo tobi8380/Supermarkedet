@@ -221,9 +221,11 @@ class Supermarket_gui(ttk.Frame):
         self.tabs = ttk.Notebook(self)
         bog_fane = ttk.Frame(self.tabs)
         sim_fane = ttk.Frame(self.tabs)
+        staff_tab = ttk.Frame(self.tabs)
 
         self.tabs.add(bog_fane, text='Varer')
         self.tabs.add(sim_fane, text='Simulering')
+        self.tabs.add(staff_tab, text='Ansatte')
 
 
         right_frame = ttk.Frame(bog_fane)
