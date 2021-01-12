@@ -19,6 +19,14 @@ class Supermarket_gui(ttk.Frame):
         self.opdater_transaktions_tabel()
         self.opdater_tabel()
 
+    def login(self):
+        dlg = tk.Toplevel()
+
+        but_add_user = ttk.Button(dlg, text="Tilføj Bruger", command=close)
+        but_add_user.grid(column=1,row=3)
+        but_login = ttk.Button(dlg, text="Login", command=change_book)
+        but_login.grid(column=0,row=3)
+
     def opdater_tabel(self):
         l = self.data.get_book_list(200)
 
@@ -84,7 +92,7 @@ class Supermarket_gui(ttk.Frame):
 
 
 
-    def rediger_bog(self):
+    def rediger_vare(self):
         def change_book():
             b.titel = en_titel.get()
             b.forfatter = en_forfatter.get()
@@ -234,7 +242,7 @@ class Supermarket_gui(ttk.Frame):
         knap_frame = ttk.Frame(bog_fane)
 
 
-        self.edit_button = ttk.Button(knap_frame, text="Rediger vare", command=self.rediger_bog)
+        self.edit_button = ttk.Button(knap_frame, text="Rediger vare", command=self.rediger_vare)
         self.edit_button.pack(side=tk.TOP)
 
         self.del_button = ttk.Button(knap_frame, text="Slet vare", command=self.slet_bog)
