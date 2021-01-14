@@ -1,11 +1,7 @@
-import tkinter as tk
-from tkinter.scrolledtext import ScrolledText
-import tkinter.ttk as ttk
-from math import sqrt
+#import modules
 
-from random import randint
-
-from data import Book, Books_data, Employee
+from tkinter import *
+import os
 
 # Designing window for registration
 
