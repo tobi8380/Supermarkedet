@@ -28,7 +28,7 @@ def register():
     password_entry = Entry(register_screen, textvariable=password, show='*', bg="yellow")
     password_entry.pack()
     Label(register_screen, text="", bg="yellow").pack()
-    Button(register_screen, text="Registrer bruger", width=10, height=1, bg="yellow", fg="black", command = register_user).pack()
+    Button(register_screen, text="Registrer bruger", width=15, height=1, bg="yellow", fg="black", command = register_user).pack()
 
 
 # Designing window for login
