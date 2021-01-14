@@ -39,7 +39,7 @@ def login():
     login_screen = Toplevel(main_screen)
     login_screen.title("Login")
     login_screen.geometry("300x250")
-    Label(login_screen, text="Please enter details below to login").pack()
+    Label(login_screen, text="Indtast oplysninger").pack()
     Label(login_screen, text="").pack()
 
     global username_verify
