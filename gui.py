@@ -107,7 +107,6 @@ def login_sucess(): #MAIN SCREEN
     login_success_screen.title("VELKOMMEN TIL PROGRAMMET")
     login_success_screen.geometry("1500x750")
     Label(login_success_screen, text="VELKOMMEN SIMPS").pack()
-    Button(login_success_screen, text="OK", command=delete_login_success).pack()
 
 # Designing popup for login invalid password
 
@@ -132,10 +131,6 @@ def user_not_found():
     Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen, bg="yellow").pack()
 
 # Deleting popups
-
-def delete_login_success():
-    login_success_screen.destroy()
-
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
 
