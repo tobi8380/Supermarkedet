@@ -1,5 +1,3 @@
-#import modules
-
 from tkinter import *
 import os
 
