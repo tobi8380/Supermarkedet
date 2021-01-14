@@ -51,11 +51,11 @@ def login():
     global username_login_entry
     global password_login_entry
 
-    Label(login_screen, text="Username * ").pack()
+    Label(login_screen, text="Brugernanvn * ").pack()
     username_login_entry = Entry(login_screen, textvariable=username_verify)
     username_login_entry.pack()
     Label(login_screen, text="").pack()
-    Label(login_screen, text="Password * ").pack()
+    Label(login_screen, text="Kode * ").pack()
     password_login_entry = Entry(login_screen, textvariable=password_verify, show= '*')
     password_login_entry.pack()
     Label(login_screen, text="").pack()
@@ -76,7 +76,7 @@ def register_user():
     username_entry.delete(0, END)
     password_entry.delete(0, END)
 
-    Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
+    Label(register_screen, text="Bruger oprettet", fg="green", font=("calibri", 11)).pack()
 
 # Implementing event on login button
 
@@ -106,7 +106,7 @@ def login_sucess():
     login_success_screen = Toplevel(login_screen)
     login_success_screen.title("Success")
     login_success_screen.geometry("150x75")
-    Label(login_success_screen, text="Login Success").pack()
+    Label(login_success_screen, text="Logget ind").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
 
 # Designing popup for login invalid password
@@ -116,7 +116,7 @@ def password_not_recognised():
     password_not_recog_screen = Toplevel(login_screen)
     password_not_recog_screen.title("Success")
     password_not_recog_screen.geometry("150x75")
-    Label(password_not_recog_screen, text="Invalid Password ").pack()
+    Label(password_not_recog_screen, text="Forkert kode").pack()
     Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
 
 # Designing popup for user not found
@@ -126,7 +126,7 @@ def user_not_found():
     user_not_found_screen = Toplevel(login_screen)
     user_not_found_screen.title("Success")
     user_not_found_screen.geometry("150x75")
-    Label(user_not_found_screen, text="User Not Found").pack()
+    Label(user_not_found_screen, text="Bruger ikke fundet").pack()
     Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
 
 # Deleting popups
