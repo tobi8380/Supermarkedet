@@ -58,7 +58,7 @@ class Super_data:
             db.close()
 
     def get_item_list(self):
-        
+        pass
 
 
     def _create_db_tables(self):
