@@ -100,12 +100,12 @@ def login_verify():
 
 # Designing popup for login success
 
-def login_sucess():
+def login_sucess(): #MAIN SCREEN
     global login_success_screen
     login_success_screen = Toplevel(login_screen)
-    login_success_screen.title("Success")
-    login_success_screen.geometry("150x75")
-    Label(login_success_screen, text="Logget ind").pack()
+    login_success_screen.title("VELKOMMEN TIL PROGRAMMET")
+    login_success_screen.geometry("1500x750")
+    Label(login_success_screen, text="VELKOMMEN SIMPS").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
 
 # Designing popup for login invalid password
@@ -133,10 +133,8 @@ def user_not_found():
 def delete_login_success():
     login_success_screen.destroy()
 
-
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
-
 
 def delete_user_not_found_screen():
     user_not_found_screen.destroy()
