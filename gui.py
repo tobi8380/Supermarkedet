@@ -1,7 +1,9 @@
 from tkinter import *
 import os
-
+from data import Super_data
 # Designing window for registration
+
+super_data = Super_data()
 
 def register():
     global register_screen
@@ -28,7 +30,6 @@ def register():
     password_entry.pack()
     Label(register_screen, text="").pack()
     Button(register_screen, text="Registrer bruger", width=10, height=1, bg="blue", command = register_user).pack()
-
 
 # Designing window for login
 
@@ -65,35 +66,36 @@ def register_user():
 
     username_info = username.get()
     password_info = password.get()
-
-    file = open(username_info, "w")
-    file.write(username_info + "\n")
-    file.write(password_info)
-    file.close()
-
     username_entry.delete(0, END)
     password_entry.delete(0, END)
+
+    if super_data.register_user(username_info, password_info):
+        print("user created")
+    else:
+        print("user already exists")
+
+    #
+    # file = open(username_info, "w")
+    # file.write(username_info + "\n")
+    # file.write(password_info)
+    # file.close()
+
+
 
     Label(register_screen, text="Bruger oprettet", fg="green", font=("calibri", 11)).pack()
 
 # Implementing event on login button
 
 def login_verify():
-    username1 = username_verify.get()
-    password1 = password_verify.get()
+    username = username_verify.get()
+    password = password_verify.get()
     username_login_entry.delete(0, END)
     password_login_entry.delete(0, END)
 
-    list_of_files = os.listdir()
-    if username1 in list_of_files:
-        file1 = open(username1, "r")
-        verify = file1.read().splitlines()
-        if password1 in verify:
-            login_sucess()
+    print(username + password)
 
-        else:
-            password_not_recognised()
-
+    if super_data.login_success(username, password):
+        login_sucess()
     else:
         user_not_found()
 
@@ -107,12 +109,22 @@ def login_sucess():
     Label(login_success_screen, text="Logget ind").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
 
+# Designing popup for login success
+
+def register_sucess():
+    global login_success_screen
+    login_success_screen = Toplevel(login_screen)
+    login_success_screen.title("Success")
+    login_success_screen.geometry("150x75")
+    Label(login_success_screen, text="Logget ind").pack()
+    Button(login_success_screen, text="OK", command=delete_login_success).pack()
+
 # Designing popup for login invalid password
 
 def password_not_recognised():
     global password_not_recog_screen
     password_not_recog_screen = Toplevel(login_screen)
-    password_not_recog_screen.title("Success")
+    password_not_recog_screen.title("bad username")
     password_not_recog_screen.geometry("150x75")
     Label(password_not_recog_screen, text="Forkert kode").pack()
     Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()

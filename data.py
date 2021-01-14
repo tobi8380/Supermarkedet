@@ -3,7 +3,6 @@
 import sqlite3
 from datetime import datetime
 
-
 class item:
     def __init__(self):
         name = "henrik"
@@ -39,7 +38,7 @@ class Employee:
 class Super_data:
     def __init__(self):
         self.DATABASE = 'supermarket_data.db'
-
+        self._create_db_tables()
         # c = self._get_db().cursor()
 
     def _get_db(self):
@@ -69,6 +68,19 @@ class Super_data:
         else:
             return False
         return db_pw == password
+
+    def register_user(self, user, password):
+        db = self._get_db()
+        c = db.cursor()
+        c.execute("SELECT * FROM users WHERE username = ?", (user,))
+        found_user = c.fetchone()
+        if found_user:
+            res = False
+        else:
+            c.execute("INSERT INTO users (username, password) VALUES (?,?)", (user, password))
+            db.commit()
+            res = True
+        return res
 
 
 
