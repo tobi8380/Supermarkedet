@@ -3,6 +3,7 @@ import os
 
 # Designing window for registration
 
+#class login_gui(ttk.Frame):
 def register():
     global register_screen
     register_screen = Toplevel(main_screen)

@@ -1,5 +1,7 @@
 from tkinter import *
+import tkinter.ttk as ttk
 import os
 import login_gui
 
-print('test')
+class supermarket_gui(ttk.Frame):
+    pass
