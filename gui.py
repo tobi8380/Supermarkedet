@@ -38,8 +38,9 @@ def login():
     login_screen = Toplevel(main_screen)
     login_screen.title("Login")
     login_screen.geometry("300x250")
-    Label(login_screen, text="Indtast oplysninger").pack()
-    Label(login_screen, text="").pack()
+    login_screen.configure(bg="yellow")
+    Label(login_screen, text="Indtast oplysninger", bg="yellow").pack()
+    Label(login_screen, text="", bg="yellow").pack()
 
     global username_verify
     global password_verify
@@ -50,15 +51,15 @@ def login():
     global username_login_entry
     global password_login_entry
 
-    Label(login_screen, text="Brugernanvn * ").pack()
-    username_login_entry = Entry(login_screen, textvariable=username_verify)
+    Label(login_screen, text="Brugernavn", bg="yellow").pack()
+    username_login_entry = Entry(login_screen, textvariable=username_verify, bg="yellow")
     username_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Label(login_screen, text="Kode * ").pack()
-    password_login_entry = Entry(login_screen, textvariable=password_verify, show= '*')
+    Label(login_screen, text="", bg="yellow").pack()
+    Label(login_screen, text="Kode", bg="yellow").pack()
+    password_login_entry = Entry(login_screen, textvariable=password_verify, show= '*', bg="yellow")
     password_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Button(login_screen, text="Login", width=10, height=1, command = login_verify).pack()
+    Label(login_screen, text="", bg="yellow").pack()
+    Button(login_screen, text="Login", width=10, height=1, command = login_verify, bg="yellow").pack()
 
 # Implementing event on register button
 
@@ -75,7 +76,7 @@ def register_user():
     username_entry.delete(0, END)
     password_entry.delete(0, END)
 
-    Label(register_screen, text="Bruger oprettet", fg="green", font=("calibri", 11)).pack()
+    Label(register_screen, text="Bruger oprettet", fg="black", font=("calibri", 11), bg="yellow").pack()
 
 # Implementing event on login button
 
@@ -105,8 +106,8 @@ def login_sucess():
     login_success_screen = Toplevel(login_screen)
     login_success_screen.title("Success")
     login_success_screen.geometry("150x75")
-    Label(login_success_screen, text="Logget ind").pack()
-    Button(login_success_screen, text="OK", command=delete_login_success).pack()
+    Label(login_success_screen, text="Logget ind", bg="yellow").pack()
+    Button(login_success_screen, text="OK", command=delete_login_success, bg="yellow").pack()
 
 # Designing popup for login invalid password
 
@@ -115,8 +116,9 @@ def password_not_recognised():
     password_not_recog_screen = Toplevel(login_screen)
     password_not_recog_screen.title("Success")
     password_not_recog_screen.geometry("150x75")
-    Label(password_not_recog_screen, text="Forkert kode").pack()
-    Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
+    password_not_recog_screen.configure(bg="yellow")
+    Label(password_not_recog_screen, text="Forkert kode", bg="yellow").pack()
+    Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised, bg="yellow").pack()
 
 # Designing popup for user not found
 
@@ -125,8 +127,9 @@ def user_not_found():
     user_not_found_screen = Toplevel(login_screen)
     user_not_found_screen.title("Success")
     user_not_found_screen.geometry("150x75")
-    Label(user_not_found_screen, text="Bruger ikke fundet").pack()
-    Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
+    user_not_found_screen.configure(bg="yellow")
+    Label(user_not_found_screen, text="Bruger ikke fundet", bg="yellow").pack()
+    Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen, bg="yellow").pack()
 
 # Deleting popups
 
@@ -149,9 +152,10 @@ def main_account_screen():
     main_screen = Tk()
     main_screen.geometry("300x175")
     main_screen.title("Account Login")
-    Button(text="Login", height="2", width="30", command = login).pack()
-    Label(text="").pack()
-    Button(text="Register", height="2", width="30", command=register).pack()
+    main_screen.configure(bg="yellow")
+    Button(text="Login", height="2", width="30", command = login, bg="yellow").pack()
+    Label(text="", bg="yellow").pack()
+    Button(text="Register", height="2", width="30", command=register, bg="yellow").pack()
 
     main_screen.mainloop()
 
