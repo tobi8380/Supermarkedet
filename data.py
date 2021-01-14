@@ -60,6 +60,17 @@ class Super_data:
     def get_item_list(self):
         pass
 
+    def login_success(self, user, password):
+        c = self._get_db().cursor()
+        c.execute("SELECT password FROM users WHERE username = ?", (user,))
+        r = c.fetchone()
+        if r is not None:
+            db_pw = r[0]
+        else:
+            return False
+        return db_pw == password
+
+
 
     def _create_db_tables(self):
         db = self._get_db()
@@ -71,13 +82,13 @@ class Super_data:
 
 
         c = db.cursor()
-        # try:
-        #     c.execute("""CREATE TABLE users (
-        #         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        #         username TEXT,
-        #         password TEXT);""")
-        # except Exception as e:
-        #     print(e)
+        try:
+            c.execute("""CREATE TABLE users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT,
+                password TEXT);""")
+        except Exception as e:
+            print(e)
 
 
         db.commit()
