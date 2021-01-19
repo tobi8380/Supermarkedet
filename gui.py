@@ -5,5 +5,7 @@ import login
 from data import Super_data
 
 class supermarket:
-    pass
-    
+def __init__(self, master=None):
+    ttk.Frame.__init__(self, master)
+
+        self.build_GUI()
