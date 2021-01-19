@@ -108,6 +108,7 @@ def login_sucess():
     login_success_screen.geometry("150x75")
     Label(login_success_screen, text="Logget ind").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
+    logged_in = True
 
 # Designing popup for login success
 
