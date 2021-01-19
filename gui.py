@@ -2,14 +2,24 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 import os
-import login
+
+from login_gui import
 from data import Super_data
+
 
 class supermarket_gui(ttk.Frame):
     def __init__(self, master=None):
         ttk.Frame.__init__(self, master)
 
-        self.build_GUI()
+        logged_in = False
+
+        if logged_in == True:
+            self.build_GUI()
+        else:
+            self.login_gui()
+
+    def login_gui(self):
+        pass
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
