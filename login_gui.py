@@ -168,5 +168,5 @@ def main_account_screen():
 
     main_screen.mainloop()
 
-
-main_account_screen()
+if __name__ == '__main__':
+    main_account_screen()

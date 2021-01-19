@@ -3,7 +3,7 @@ import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 import os
 
-from login_gui import
+import login_gui
 from data import Super_data
 
 
@@ -19,7 +19,7 @@ class supermarket_gui(ttk.Frame):
             self.login_gui()
 
     def login_gui(self):
-        pass
+        login_gui.main_account_screen()
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
