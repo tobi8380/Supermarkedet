@@ -6,3 +6,4 @@ from data import Super_data
 
 class supermarket:
     pass
+    

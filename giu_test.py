@@ -1,162 +1,324 @@
-#import modules
+import tkinter as tk
+from tkinter.scrolledtext import ScrolledText
+import tkinter.ttk as ttk
+from math import sqrt
 
-from tkinter import *
-import os
+from random import randint
 
-# Designing window for registration
+from Book_data import Book, Books_data, Employee
 
-def register():
-    global register_screen
-    register_screen = Toplevel(main_screen)
-    register_screen.title("Register")
-    register_screen.geometry("300x250")
+class Book_gui(ttk.Frame):
+    def __init__(self, master=None):
+        ttk.Frame.__init__(self, master)
 
-    global username
-    global password
-    global username_entry
-    global password_entry
-    username = StringVar()
-    password = StringVar()
+        self.data = Books_data(False)
+        self.kurv = self.data.create_new_transaction()
 
-    Label(register_screen, text="Please enter details below", bg="blue").pack()
-    Label(register_screen, text="").pack()
-    username_lable = Label(register_screen, text="Username * ")
-    username_lable.pack()
-    username_entry = Entry(register_screen, textvariable=username)
-    username_entry.pack()
-    password_lable = Label(register_screen, text="Password * ")
-    password_lable.pack()
-    password_entry = Entry(register_screen, textvariable=password, show='*')
-    password_entry.pack()
-    Label(register_screen, text="").pack()
-    Button(register_screen, text="Register", width=10, height=1, bg="blue", command = register_user).pack()
+        self.build_GUI()
 
+        self.opdater_transaktions_tabel()
+        self.opdater_tabel()
 
-# Designing window for login
+    def opdater_tabel(self):
+        l = self.data.get_book_list(200)
 
-def login():
-    global login_screen
-    login_screen = Toplevel(main_screen)
-    login_screen.title("Login")
-    login_screen.geometry("300x250")
-    Label(login_screen, text="Please enter details below to login").pack()
-    Label(login_screen, text="").pack()
+        self.db_view.delete(*self.db_view.get_children())
+        for b in l:
+            self.db_view.insert("", tk.END, values=(b.titel, b.forfatter, b.aarstal, b.get_rating(), b.id))
 
-    global username_verify
-    global password_verify
+    def opdater_transaktions_tabel(self):
+        self.trans_view.delete(*self.trans_view.get_children())
+        for t in self.data.transactions:
+            self.trans_view.insert("", tk.END, values=(t.id, t.get_amount(), t.status))
 
-    username_verify = StringVar()
-    password_verify = StringVar()
+    def on_trans_selected(self, event):
+        t = self.trans_view.item(self.trans_view.focus())['values']
+        print(t)
 
-    global username_login_entry
-    global password_login_entry
+    def on_book_selected(self, event):
+        curItem = self.db_view.item(self.db_view.focus())['values']
+        if len(curItem) > 0:
+            b = self.data.get_book(curItem[4])
 
-    Label(login_screen, text="Username * ").pack()
-    username_login_entry = Entry(login_screen, textvariable=username_verify)
-    username_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Label(login_screen, text="Password * ").pack()
-    password_login_entry = Entry(login_screen, textvariable=password_verify, show= '*')
-    password_login_entry.pack()
-    Label(login_screen, text="").pack()
-    Button(login_screen, text="Login", width=10, height=1, command = login_verify).pack()
+            self.lbl_titel.configure(text="Titel: {}".format(b.titel))
+            self.lbl_forfatter.configure(text="Forfatter: {}".format(b.forfatter))
 
-# Implementing event on register button
+            self.can.delete("all")
+            print(b.ratings[0]/sum(b.ratings))
 
-def register_user():
-
-    username_info = username.get()
-    password_info = password.get()
-
-    file = open(username_info, "w")
-    file.write(username_info + "\n")
-    file.write(password_info)
-    file.close()
-
-    username_entry.delete(0, END)
-    password_entry.delete(0, END)
-
-    Label(register_screen, text="Registration Success", fg="green", font=("calibri", 11)).pack()
-
-# Implementing event on login button
-
-def login_verify():
-    username1 = username_verify.get()
-    password1 = password_verify.get()
-    username_login_entry.delete(0, END)
-    password_login_entry.delete(0, END)
-
-    list_of_files = os.listdir()
-    if username1 in list_of_files:
-        file1 = open(username1, "r")
-        verify = file1.read().splitlines()
-        if password1 in verify:
-            login_sucess()
-
-        else:
-            password_not_recognised()
-
-    else:
-        user_not_found()
-
-# Designing popup for login success
-
-def login_sucess():
-    global login_success_screen
-    login_success_screen = Toplevel(login_screen)
-    login_success_screen.title("Success")
-    login_success_screen.geometry("150x100")
-    Label(login_success_screen, text="Login Success").pack()
-    Button(login_success_screen, text="OK", command=delete_login_success).pack()
-
-# Designing popup for login invalid password
-
-def password_not_recognised():
-    global password_not_recog_screen
-    password_not_recog_screen = Toplevel(login_screen)
-    password_not_recog_screen.title("Success")
-    password_not_recog_screen.geometry("150x100")
-    Label(password_not_recog_screen, text="Invalid Password ").pack()
-    Button(password_not_recog_screen, text="OK", command=delete_password_not_recognised).pack()
-
-# Designing popup for user not found
-
-def user_not_found():
-    global user_not_found_screen
-    user_not_found_screen = Toplevel(login_screen)
-    user_not_found_screen.title("Success")
-    user_not_found_screen.geometry("150x100")
-    Label(user_not_found_screen, text="User Not Found").pack()
-    Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
-
-# Deleting popups
-
-def delete_login_success():
-    login_success_screen.destroy()
+            self.can.create_line(5,195,5,5, arrow=tk.LAST)
+            self.can.create_line(5,195,165,195, arrow=tk.LAST)
+            for i in range(0,len(b.ratings)):
+                self.can.create_rectangle(i*25 + 10,190,i*25 + 30,190-200*(b.ratings[i]/sum(b.ratings)))
 
 
-def delete_password_not_recognised():
-    password_not_recog_screen.destroy()
+    def slet_bog(self):
+        def close():
+            dlg.destroy()
+            dlg.update()
+
+        def confirm():
+            curItem = self.db_view.item(self.db_view.focus())['values']
+
+            if len(curItem) > 0:
+                b = Book()
+                b.titel = curItem[0]
+                b.forfatter = curItem[1]
+                b.aarstal = curItem[2]
+                b.id = int(curItem[4])
+
+                self.data.slet_bog(b)
+                self.opdater_tabel()
+
+                dlg.destroy()
+                dlg.update()
 
 
-def delete_user_not_found_screen():
-    user_not_found_screen.destroy()
+        dlg = tk.Toplevel()
+        lbl = tk.Label(dlg, text="Vil du slette bogen?")
+        lbl.grid(column=0, row=0)
+        but_annuller = ttk.Button(dlg, text="Fortryd", command=close)
+        but_annuller.grid(column=0,row=1)
+        but_ok = ttk.Button(dlg, text="Bekræft", command=confirm)
+        but_ok.grid(column=1,row=1)
 
 
-# Designing Main(first) window
 
-def main_account_screen():
-    global main_screen
-    main_screen = Tk()
-    main_screen.geometry("300x250")
-    main_screen.title("Account Login")
-    Label(text="Select Your Choice", bg="blue", width="300", height="2", font=("Calibri", 13)).pack()
-    Label(text="").pack()
-    Button(text="Login", height="2", width="30", command = login).pack()
-    Label(text="").pack()
-    Button(text="Register", height="2", width="30", command=register).pack()
+    def rediger_bog(self):
+        def change_book():
+            b.titel = en_titel.get()
+            b.forfatter = en_forfatter.get()
+            self.data.update_book(b)
+            b.give_rating(sc_rating.scale.get())
+            self.opdater_tabel()
+            dlg.destroy()
+            dlg.update()
 
-    main_screen.mainloop()
+        def close():
+            dlg.destroy()
+            dlg.update()
+
+        curItem = self.db_view.item(self.db_view.focus())['values']
+
+        if len(curItem) > 0:
+            b = self.data.get_book(curItem[4])
+
+            dlg = tk.Toplevel()
+
+            lbl_titel = ttk.Label(dlg, text='Titel')
+            lbl_titel.grid(column =0, row = 0)
+            en_titel = ttk.Entry(dlg)
+            en_titel.grid(column=1, row=0)
+            en_titel.delete(0, tk.END)
+            en_titel.insert(0, b.titel)
+
+            lbl_forfatter = ttk.Label(dlg, text='Forfatter')
+            lbl_forfatter.grid(column =0, row = 1)
+            en_forfatter = ttk.Entry(dlg)
+            en_forfatter.grid(column=1, row=1)
+            en_forfatter.delete(0, tk.END)
+            en_forfatter.insert(0, b.forfatter)
+
+            lbl_rating = ttk.Label(dlg, text='Rating')
+            lbl_rating.grid(column =0, row = 2)
+            sc_rating = ttk.LabeledScale(dlg, from_ = 0, to = 5)
+            sc_rating.value = b.get_rating()
+            sc_rating.grid(column=1, row=2)
+
+            but_annuller = ttk.Button(dlg, text="Annuller", command=close)
+            but_annuller.grid(column=1,row=3)
+            but_ok = ttk.Button(dlg, text="Gem ændringer", command=change_book)
+            but_ok.grid(column=0,row=3)
+
+    def sorterTitel(self):
+        self.data.sorter("titel")
+        self.opdater_tabel()
+
+    def sorterForfatter(self):
+        self.data.sorter("forfatter")
+        self.opdater_tabel()
+
+    def sorterAarstal(self):
+        self.data.sorter("aarstal")
+        self.opdater_tabel()
+
+    def sorterRating(self):
+        self.data.sorter("rating")
+        self.opdater_tabel()
+
+    def log_text(self, msg):
+        self.cons.configure(state='normal')
+        self.cons.insert(tk.END, msg + '\n')
+        self.cons.configure(state='disabled')
+        # Autoscroll to the bottom
+        self.cons.yview(tk.END)
+
+    def ansaet(self):
+        #(Opgave 4)
+        #Denne funktion skal ansætte en ny Employee i butikken
+        self.data.ansaet()
+        self.update_ui()
+
+    def fyr(self):
+        #(Opgave 4)
+        #Denne funktion skal fyre en af de ansatte
+        self.data.fyr()
+        self.update_ui()
+
+    def udbetal_loen(self):
+        l = self.data.udbetal_loen()
+        self.log_text("Der blev udbetalt {} i løn".format(l))
+        self.update_ui()
+
+        self.after(30000, self.udbetal_loen)
+
+    def simulate_customer(self):
+        #Udsalg?
+        rabat = self.sc_tilbud.scale.get() * 0.01
+
+        amount = int(rabat * randint(100,200) + randint(0,int(500*sqrt(len(self.data.ansatte)))))
+        self.data.indtaegt(amount)
+
+        self.log_text("En kunde købte for {}".format(amount))
+        self.update_ui()
+
+        #Hvis der er udsalg, kommer der hurtigere nye kunder!
+        self.after(int(5000*rabat), self.simulate_customer)
 
 
-main_account_screen()
+    def update_ui(self):
+        self.lblAnsatte.configure(text="Antal ansatte: {}".format(len(self.data.ansatte)))
+        self.lblMoney.configure(text="Pengebeholdning: {}".format(self.data.money))
+
+
+    def tilfoj_kurv(self):
+        curItem = self.db_view.item(self.db_view.focus())['values']
+        if len(curItem) > 0:
+            #Tilføj id til kurven
+            self.kurv.add_item(curItem[4])
+            self.kurv_text.configure(state='normal')
+            self.kurv_text.delete('1.0', tk.END)
+            for i in self.kurv.items:
+                b = self.data.get_book(i)
+                self.kurv_text.insert(tk.END, b.titel + ',' + str(b.pris) + '\n')
+            self.kurv_text.configure(state='disabled')
+            # Autoscroll to the bottom
+            self.kurv_text.yview(tk.END)
+        self.opdater_transaktions_tabel()
+
+    def koeb(self):
+        pris = self.kurv.get_amount()
+        self.data.indtaegt(pris)
+        self.kurv.finalize()
+        self.log_text("En kunde fyldte sin kurv for {} kr.".format(pris))
+        self.kurv_text.configure(state='normal')
+        self.kurv_text.delete('1.0', tk.END)
+        self.kurv_text.configure(state='disabled')
+        self.kurv = self.data.create_new_transaction()
+        self.opdater_transaktions_tabel()
+
+    def build_GUI(self):
+        self.tabs = ttk.Notebook(self)
+        bog_fane = ttk.Frame(self.tabs)
+        sim_fane = ttk.Frame(self.tabs)
+
+        self.tabs.add(bog_fane, text='Bøger')
+        self.tabs.add(sim_fane, text='Simulering')
+
+        right_frame = ttk.Frame(bog_fane)
+        top_frame = ttk.Frame(right_frame)
+        data_frame = ttk.Frame(right_frame)
+        knap_frame = ttk.Frame(bog_fane)
+
+
+        self.edit_button = ttk.Button(knap_frame, text="Rediger bog", command=self.rediger_bog)
+        self.edit_button.pack(side=tk.TOP)
+
+        self.del_button = ttk.Button(knap_frame, text="Slet bog", command=self.slet_bog)
+        self.del_button.pack(side=tk.TOP)
+
+        self.add_button = ttk.Button(knap_frame, text="Tilføj til kurv", command=self.tilfoj_kurv)
+        self.add_button.pack(side=tk.TOP)
+
+        self.buy_button = ttk.Button(knap_frame, text="Køb", command=self.koeb)
+        self.buy_button.pack(side=tk.TOP)
+
+        self.kurv_text = ScrolledText(knap_frame, state='disabled', width=20,height=5)
+        self.kurv_text.pack(side=tk.TOP)
+        self.kurv_text.configure(font='TkFixedFont')
+
+        self.cons = ScrolledText(sim_fane, state='disabled', height=12)
+        self.cons.pack(side = tk.TOP)
+        self.cons.configure(font='TkFixedFont')
+        self.after(1000, self.simulate_customer)
+
+        butAnsaet = ttk.Button(sim_fane, text="Ansæt en person", command=self.ansaet)
+        butAnsaet.pack(side=tk.TOP)
+        butFyr = ttk.Button(sim_fane, text="Fyr en person", command=self.fyr)
+        butFyr.pack(side=tk.TOP)
+        self.after(3000, self.udbetal_loen)
+        self.lblMoney = ttk.Label(sim_fane, text="Pengebeholdning: {}".format(self.data.money))
+        self.lblMoney.pack(side=tk.TOP)
+        self.lblAnsatte = ttk.Label(sim_fane, text="Antal ansatte: {}".format(len(self.data.ansatte)))
+        self.lblAnsatte.pack(side=tk.TOP)
+        self.sc_tilbud = ttk.LabeledScale (sim_fane,from_=50,to=110)
+        self.sc_tilbud.pack(side=tk.TOP)
+
+        self.db_view = ttk.Treeview(data_frame, column=("column1", "column2", "column3", "column4", "column5"), show='headings')
+        self.db_view.bind("<ButtonRelease-1>", self.on_book_selected)
+        self.db_view.heading("#1", text="Titel", command=self.sorterTitel)
+        self.db_view.column("#1",minwidth=0,width=150, stretch=tk.NO)
+        self.db_view.heading("#2", text="Forfatter", command=self.sorterForfatter)
+        self.db_view.column("#2",minwidth=0,width=150, stretch=tk.NO)
+        self.db_view.heading("#3", text="Årstal", command=self.sorterAarstal)
+        self.db_view.column("#3",minwidth=0,width=80, stretch=tk.NO)
+        self.db_view.heading("#4", text="Rating", command=self.sorterRating)
+        self.db_view.column("#4",minwidth=0,width=80, stretch=tk.NO)
+        self.db_view.heading("#5", text="id")
+        #Læg mærke til at kolonne 5 ikke bliver vist.
+        #Vi kan stadig finde id på den bog der er valgt,
+        #men brugeren kan ikke se id.
+        self.db_view["displaycolumns"]=("column1", "column2", "column3", "column4")
+        ysb = ttk.Scrollbar(data_frame, command=self.db_view.yview, orient=tk.VERTICAL)
+        self.db_view.configure(yscrollcommand=ysb.set)
+        self.db_view.pack(side = tk.TOP, fill=tk.BOTH)
+
+        self.trans_view = ttk.Treeview(knap_frame, column=("column1", "column2", "column3"), show='headings')
+        self.trans_view.bind("<ButtonRelease-1>", self.on_trans_selected)
+        self.trans_view.heading("#1", text="id")
+        self.trans_view.column("#1",minwidth=0,width=20, stretch=tk.NO)
+        self.trans_view.heading("#2", text="Pris")
+        self.trans_view.column("#2",minwidth=0,width=30, stretch=tk.NO)
+        self.trans_view.heading("#3", text="Status")
+        self.trans_view.column("#3",minwidth=0,width=80, stretch=tk.NO)
+        self.trans_view["displaycolumns"]=("column1", "column2", "column3")
+        ysb = ttk.Scrollbar(data_frame, command=self.trans_view.yview, orient=tk.VERTICAL)
+        self.trans_view.configure(yscrollcommand=ysb.set)
+        self.trans_view.pack(side = tk.TOP, fill=tk.BOTH)
+
+        #Top Frame
+        self.can = tk.Canvas(top_frame, width=200, height=200)
+        self.can.grid(column=1, row=0, rowspan=2)
+
+        self.lbl_titel = ttk.Label(top_frame, text='Titel')
+        self.lbl_forfatter = ttk.Label(top_frame, text='Forfatter')
+        self.lbl_titel.grid(column=0, row=0)
+        self.lbl_forfatter.grid(column=0, row=1)
+
+        top_frame.pack(side=tk.TOP)
+        data_frame.pack(side = tk.TOP)
+        knap_frame.pack(side = tk.LEFT, fill=tk.Y)
+        right_frame.pack(side=tk.RIGHT, fill=tk.Y)
+        self.tabs.pack(expand=1, fill="both")
+
+        self.pack()
+
+        self.after(10000, self.udbetal_loen)
+        self.after(1000, self.simulate_customer)
+
+root = tk.Tk()
+root.geometry("800x600")
+
+app = Book_gui(root)
+app.master.title('Bøger')
+app.mainloop()
