@@ -24,16 +24,16 @@ class supermarket_gui(ttk.Frame):
         knap_frame = ttk.Frame(bog_fane)
 
 
-        self.edit_button = ttk.Button(knap_frame, text="Rediger bog", command=self.rediger_bog)
+        self.edit_button = ttk.Button(knap_frame, text="Rediger bog", command=self.do_nothing)
         self.edit_button.pack(side=tk.TOP)
 
-        self.del_button = ttk.Button(knap_frame, text="Slet bog", command=self.slet_bog)
+        self.del_button = ttk.Button(knap_frame, text="Slet bog", command=self.do_nothing)
         self.del_button.pack(side=tk.TOP)
 
-        self.add_button = ttk.Button(knap_frame, text="Tilføj til kurv", command=self.tilfoj_kurv)
+        self.add_button = ttk.Button(knap_frame, text="Tilføj til kurv", command=self.do_nothing)
         self.add_button.pack(side=tk.TOP)
 
-        self.buy_button = ttk.Button(knap_frame, text="Køb", command=self.koeb)
+        self.buy_button = ttk.Button(knap_frame, text="Køb", command=self.do_nothing)
         self.buy_button.pack(side=tk.TOP)
 
         self.kurv_text = ScrolledText(knap_frame, state='disabled', width=20,height=5)
@@ -108,6 +108,10 @@ class supermarket_gui(ttk.Frame):
 
         self.after(10000, self.udbetal_loen)
         self.after(1000, self.simulate_customer)
+
+    def do_nothing():
+        pass
+
 root = tk.Tk()
 root.geometry("800x600")
 
