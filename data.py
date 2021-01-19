@@ -3,33 +3,38 @@
 import sqlite3
 from datetime import datetime
 
-class item:
-    def __init__(self):
-        name = "henrik"
-        creation_date = "date"
-        expiration_date = "date"
-        price = 0
-        item_id = "item_id_class"
-        discount_price = 0
-        stock = 3
+class item_type:
+    def __init__(self, name, price, discount_price, item_id):
+        self.name = name
+        self.price = price
+        self.discount_price = discount_price
+        self.item_id = item_id
 
-class item_id:
-    def __init__(self):
-        pass
 
-class barcode(item_id):
-    def __init__(self):
-        pass
+class item_delivery:
+    def __init__(self, item_type, stock, arrival_date, expiration_date):
+        self.item_type = item_type
+        self.stock = stock
+        self.arrival_date = arrival_date
+        self.expiration_date = expiration_date
 
-class item_code(item_id):
-    def __init__(self):
-        pass
+# class item_id:
+#     def __init__(self):
+#         pass
+#
+# class barcode(item_id):
+#     def __init__(self):
+#         pass
+#
+# class item_code(item_id):
+#     def __init__(self):
+#         pass
 
 class Employee:
     def __init__(self):
-        self.wage = "fuck henrik"
+        self.wage = 123
         self.timer = 0.1
-        self.position = "dumme henrik"
+        self.position = "administrator"
         self.name = "henrik"
         self.password = "123"
         self.cpr = "1234"
@@ -58,6 +63,8 @@ class Super_data:
 
     def get_item_list(self):
         pass
+
+
 
     def login_success(self, user, password):
         c = self._get_db().cursor()
