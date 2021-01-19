@@ -82,8 +82,6 @@ class Super_data:
             res = True
         return res
 
-
-
     def _create_db_tables(self):
         db = self._get_db()
         # try:
