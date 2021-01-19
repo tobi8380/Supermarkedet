@@ -1,10 +1,8 @@
 from tkinter import *
 import tkinter.ttk as ttk
 import os
-
 from data import Super_data
 # Designing window for registration
-
 super_data = Super_data()
 
 def register():
@@ -20,7 +18,7 @@ def register():
     username = StringVar()
     password = StringVar()
 
-    Label(register_screen, text="Indtast oplysninger", bg="blue").pack()
+    Label(register_screen, text="Indtast oplysninger").pack()
     Label(register_screen, text="").pack()
     username_lable = Label(register_screen, text="Brugernavn * ")
     username_lable.pack()
@@ -31,7 +29,7 @@ def register():
     password_entry = Entry(register_screen, textvariable=password, show='*')
     password_entry.pack()
     Label(register_screen, text="").pack()
-    Button(register_screen, text="Registrer bruger", width=10, height=1, bg="blue", command = register_user).pack()
+    Button(register_screen, text="Registrer bruger", width=10, height=1, command = register_user).pack()
 
 # Designing window for login
 
@@ -65,7 +63,6 @@ def login():
 # Implementing event on register button
 
 def register_user():
-
     username_info = username.get()
     password_info = password.get()
     username_entry.delete(0, END)
@@ -73,6 +70,7 @@ def register_user():
 
     if super_data.register_user(username_info, password_info):
         print("user created")
+        register_sucess()
     else:
         print("user already exists")
 
@@ -84,7 +82,7 @@ def register_user():
 
 
 
-    Label(register_screen, text="Bruger oprettet", fg="green", font=("calibri", 11)).pack()
+    # Label(register_screen, text="Bruger oprettet", fg="green", font=("calibri", 11)).pack()
 
 # Implementing event on login button
 
@@ -115,10 +113,10 @@ def login_sucess():
 
 def register_sucess():
     global login_success_screen
-    login_success_screen = Toplevel(login_screen)
+    login_success_screen = Toplevel(register_screen)
     login_success_screen.title("Success")
     login_success_screen.geometry("150x75")
-    Label(login_success_screen, text="Logget ind").pack()
+    Label(login_success_screen, text="Bruger oprettet").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
 
 # Designing popup for login invalid password
