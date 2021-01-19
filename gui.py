@@ -44,29 +44,29 @@ class supermarket_gui(ttk.Frame):
         self.cons = ScrolledText(sim_fane, state='disabled', height=12)
         self.cons.pack(side = tk.TOP)
         self.cons.configure(font='TkFixedFont')
-        self.after(1000, self.simulate_customer)
+        self.after(1000, self.do_nothing)
 
-        butAnsaet = ttk.Button(sim_fane, text="Ansæt en person", command=self.ansaet)
+        butAnsaet = ttk.Button(sim_fane, text="Ansæt en person", command=self.do_nothing)
         butAnsaet.pack(side=tk.TOP)
-        butFyr = ttk.Button(sim_fane, text="Fyr en person", command=self.fyr)
+        butFyr = ttk.Button(sim_fane, text="Fyr en person", command=self.do_nothing)
         butFyr.pack(side=tk.TOP)
-        self.after(3000, self.udbetal_loen)
-        self.lblMoney = ttk.Label(sim_fane, text="Pengebeholdning: {}".format(self.data.money))
+        self.after(3000, self.do_nothing)
+        self.lblMoney = ttk.Label(sim_fane, text="Pengebeholdning: {}".format(self.do_nothing))
         self.lblMoney.pack(side=tk.TOP)
-        self.lblAnsatte = ttk.Label(sim_fane, text="Antal ansatte: {}".format(len(self.data.ansatte)))
+        self.lblAnsatte = ttk.Label(sim_fane, text="Antal ansatte: {}".format(self.do_nothing))
         self.lblAnsatte.pack(side=tk.TOP)
         self.sc_tilbud = ttk.LabeledScale (sim_fane,from_=50,to=110)
         self.sc_tilbud.pack(side=tk.TOP)
 
         self.db_view = ttk.Treeview(data_frame, column=("column1", "column2", "column3", "column4", "column5"), show='headings')
-        self.db_view.bind("<ButtonRelease-1>", self.on_book_selected)
-        self.db_view.heading("#1", text="Titel", command=self.sorterTitel)
+        self.db_view.bind("<ButtonRelease-1>", self.do_nothing)
+        self.db_view.heading("#1", text="Titel", command=self.do_nothing)
         self.db_view.column("#1",minwidth=0,width=150, stretch=tk.NO)
-        self.db_view.heading("#2", text="Forfatter", command=self.sorterForfatter)
+        self.db_view.heading("#2", text="Forfatter", command=self.do_nothing)
         self.db_view.column("#2",minwidth=0,width=150, stretch=tk.NO)
-        self.db_view.heading("#3", text="Årstal", command=self.sorterAarstal)
+        self.db_view.heading("#3", text="Årstal", command=self.do_nothing)
         self.db_view.column("#3",minwidth=0,width=80, stretch=tk.NO)
-        self.db_view.heading("#4", text="Rating", command=self.sorterRating)
+        self.db_view.heading("#4", text="Rating", command=self.do_nothing)
         self.db_view.column("#4",minwidth=0,width=80, stretch=tk.NO)
         self.db_view.heading("#5", text="id")
         #Læg mærke til at kolonne 5 ikke bliver vist.
@@ -78,7 +78,7 @@ class supermarket_gui(ttk.Frame):
         self.db_view.pack(side = tk.TOP, fill=tk.BOTH)
 
         self.trans_view = ttk.Treeview(knap_frame, column=("column1", "column2", "column3"), show='headings')
-        self.trans_view.bind("<ButtonRelease-1>", self.on_trans_selected)
+        self.trans_view.bind("<ButtonRelease-1>", self.do_nothing)
         self.trans_view.heading("#1", text="id")
         self.trans_view.column("#1",minwidth=0,width=20, stretch=tk.NO)
         self.trans_view.heading("#2", text="Pris")
@@ -107,8 +107,8 @@ class supermarket_gui(ttk.Frame):
 
         self.pack()
 
-        self.after(10000, self.udbetal_loen)
-        self.after(1000, self.simulate_customer)
+        self.after(10000, self.do_nothing)
+        self.after(1000, self.do_nothing)
 
     def do_nothing():
         pass
