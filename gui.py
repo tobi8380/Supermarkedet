@@ -42,12 +42,11 @@ class supermarket_gui(ttk.Frame):
         password = self.password_verify.get()
         if super_data.login_success(username, password):
             self.build_GUI()
-            self.username_login_entry.delete(0, "end")
-            self.password_login_entry.delete(0, "end")
         else:
             print("incorrect credentials")
-            self.username_login_entry.delete(0, "end")
-            self.password_login_entry.delete(0, "end")
+
+        self.username_login_entry.delete(0, "end")
+        self.password_login_entry.delete(0, "end")
 
 
     def build_GUI(self):
@@ -146,10 +145,10 @@ class supermarket_gui(ttk.Frame):
 
         self.pack()
 
-        self.after(10000, self.do_nothing)
-        self.after(1000, self.do_nothing)
-
-    def do_nothing():
+    #     self.after(10000, self.do_nothing)
+    #     self.after(1000, self.do_nothing)
+    #
+    def do_nothing(self):
         pass
 
 root = tk.Tk()
