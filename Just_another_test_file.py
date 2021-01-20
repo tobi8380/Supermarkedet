@@ -111,7 +111,7 @@ def login_sucess():
 
 # Designing popup for login success
 
-def register_sucess():
+def register_sucess(): #bruges ikke lige nu
     global login_success_screen
     login_success_screen = Toplevel(register_screen)
     login_success_screen.title("Success")
