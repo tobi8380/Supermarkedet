@@ -3,8 +3,8 @@ import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 import os
 
-import login_gui
 from data import Super_data
+super_data = Super_data()
 
 
 class supermarket_gui(ttk.Frame):
@@ -19,7 +19,32 @@ class supermarket_gui(ttk.Frame):
             self.login_gui()
 
     def login_gui(self):
-        login_gui.main_account_screen()
+        login_screen = tk.Toplevel(self.master)
+        login_screen.title("Login")
+        login_screen.geometry("300x250")
+        # login_gui.main_account_screen()
+
+        self.password_verify = tk.StringVar()
+        self.username_verify = tk.StringVar()
+
+        tk.Label(login_screen, text="Brugernanvn * ").pack()
+        username_login_entry = tk.Entry(login_screen, textvariable=self.username_verify)
+        username_login_entry.pack()
+        tk.Label(login_screen, text="").pack()
+        tk.Label(login_screen, text="Kode * ").pack()
+        password_login_entry = tk.Entry(login_screen, textvariable=self.password_verify, show= '*')
+        password_login_entry.pack()
+        tk.Label(login_screen, text="").pack()
+        tk.Button(login_screen, text="Login", width=10, height=1, command = self.login_verify).pack()
+
+    def login_verify(self):
+        username = self.username_verify.get()
+        password = self.password_verify.get()
+        if super_data.login_success(username, password):
+            print("Logged in")
+        else:
+            print("incorrect credentials")
+
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
