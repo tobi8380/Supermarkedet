@@ -5,7 +5,7 @@ import os
 
 from data import Super_data
 super_data = Super_data()
-
+super_data.register_user("1", "a")
 
 class supermarket_gui(ttk.Frame):
     def __init__(self, master=None):
@@ -28,12 +28,12 @@ class supermarket_gui(ttk.Frame):
         self.username_verify = tk.StringVar()
 
         tk.Label(login_screen, text="Brugernanvn * ").pack()
-        username_login_entry = tk.Entry(login_screen, textvariable=self.username_verify)
-        username_login_entry.pack()
+        self.username_login_entry = tk.Entry(login_screen, textvariable=self.username_verify)
+        self.username_login_entry.pack()
         tk.Label(login_screen, text="").pack()
         tk.Label(login_screen, text="Kode * ").pack()
-        password_login_entry = tk.Entry(login_screen, textvariable=self.password_verify, show= '*')
-        password_login_entry.pack()
+        self.password_login_entry = tk.Entry(login_screen, textvariable=self.password_verify, show= '*')
+        self.password_login_entry.pack()
         tk.Label(login_screen, text="").pack()
         tk.Button(login_screen, text="Login", width=10, height=1, command = self.login_verify).pack()
 
@@ -41,9 +41,13 @@ class supermarket_gui(ttk.Frame):
         username = self.username_verify.get()
         password = self.password_verify.get()
         if super_data.login_success(username, password):
-            print("Logged in")
+            self.build_GUI()
+            self.username_login_entry.delete(0, "end")
+            self.password_login_entry.delete(0, "end")
         else:
             print("incorrect credentials")
+            self.username_login_entry.delete(0, "end")
+            self.password_login_entry.delete(0, "end")
 
 
     def build_GUI(self):
