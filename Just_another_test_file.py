@@ -95,7 +95,7 @@ def login_verify():
     print(username + password)
 
     if super_data.login_success(username, password):
-        login_sucess()
+        main_home_screen()
     else:
         user_not_found()
 
@@ -108,11 +108,10 @@ def login_sucess():
     login_success_screen.geometry("150x75")
     Label(login_success_screen, text="Logget ind").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
-    logged_in = True
 
 # Designing popup for login success
 
-def register_sucess():
+def register_sucess(): #bruges ikke lige nu
     global login_success_screen
     login_success_screen = Toplevel(register_screen)
     login_success_screen.title("Success")
@@ -141,14 +140,11 @@ def user_not_found():
     Button(user_not_found_screen, text="OK", command=delete_user_not_found_screen).pack()
 
 # Deleting popups
-
 def delete_login_success():
     login_success_screen.destroy()
 
-
 def delete_password_not_recognised():
     password_not_recog_screen.destroy()
-
 
 def delete_user_not_found_screen():
     user_not_found_screen.destroy()
@@ -166,6 +162,15 @@ def main_account_screen():
     Button(text="Register", height="2", width="30", command=register).pack()
 
     main_screen.mainloop()
+
+def main_home_screen():
+    global main_home_screen
+    main_home_screen = Tk()
+    main_home_screen.geometry("1000x500")
+    main_home_screen.title("Hovedskærm")
+    Label(main_home_screen, text="Velkommen").pack()
+
+    main_home_screen.mainloop()
 
 if __name__ == '__main__':
     main_account_screen()
