@@ -37,7 +37,7 @@ class supermarket_gui(ttk.Frame):
         tk.Label(login_screen, text="").pack()
         tk.Button(login_screen, text="Login", width=10, height=1, command=self.login_verify).pack()
         tk.Label(login_screen, text="").pack()
-        tk.Button(login_screen, text="Opret bruger", width=10, height=1, command=self.create_user).pack()
+        tk.Button(login_screen, text="Opret bruger", width=10, height=1, command=self.create_user_screen).pack()
 
     def login_verify(self):
         username = self.username_verify.get()
@@ -50,8 +50,22 @@ class supermarket_gui(ttk.Frame):
         self.username_login_entry.delete(0, "end")
         self.password_login_entry.delete(0, "end")
 
-    def create_user(self):
-        pass
+    def create_user_screen(self):
+
+        self.password_register = tk.StringVar()
+        self.username_register = tk.StringVar()
+
+        create_user_screen = tk.Toplevel(self.master)
+        create_user_screen.title("Registrer bruger")
+        create_user_screen.geometry("300x250")
+
+        tk.Label(create_user_screen, text="Brugernavn * ").pack()
+        self.password_register_entry = tk.Entry(create_user_screen, textvariable=self.username_register)
+        self.password_register_entry.pack()
+        tk.Label(create_user_screen, text="").pack()
+        tk.Label(create_user_screen, text="Kode * ").pack()
+        self.username_register_entry = tk.Entry(create_user_screen, textvariable=self.password_register)
+        self.username_register_entry.pack()
 
 
     def build_GUI(self):
