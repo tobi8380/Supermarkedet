@@ -2,8 +2,8 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 import os
+from data import Super_data, item, Employee
 
-from data import Super_data
 super_data = Super_data()
 super_data.register_user("1", "a")
 
@@ -61,7 +61,6 @@ class supermarket_gui(ttk.Frame):
         top_frame = ttk.Frame(right_frame)
         data_frame = ttk.Frame(right_frame)
         knap_frame = ttk.Frame(bog_fane)
-
 
         self.edit_button = ttk.Button(knap_frame, text="Rediger vare", command=self.do_nothing)
         self.edit_button.pack(side=tk.TOP)

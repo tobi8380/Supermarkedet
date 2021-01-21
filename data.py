@@ -3,13 +3,25 @@
 import sqlite3
 from datetime import datetime
 
-class item_type:
+class item:
     def __init__(self, name, price, discount_price, item_id):
+        """
+        Husk try except ved instans af item
+        """
+        if name == "":
+            raise Exception("Det er meningen at ansatte skal have navne")
+
+        elif price <= 0 or discount_price <= 0:
+            raise Exception("Prøver du at gøre vores produkter gratis kælling?")
+
+
         self.name = name
         self.price = price
         self.discount_price = discount_price
         self.item_id = item_id
         self.stock = 0
+
+
 
 class item_id:
     def __init__(self):
@@ -26,19 +38,27 @@ class item_code(item_id):
     def __init__(self):
         pass
 
-
     def check_valid_id(self):
         pass
 
+"""
+0: Administrator
+1: Normale medarbejderere
+2: Lorte ungarbejderererere
+"""
 class Employee:
-    def __init__(self):
-        self.wage = 123
-        self.timer = 0.1
-        self.position = "administrator"
-        self.name = "henrik"
-        self.password = "123"
-        self.cpr = "1234"
-        self.wage_number = 1
+    def __init__(self, name, password, position, cpr):
+        self.name = name
+        self.password = password
+        self.position = position
+        self.cpr = cpr
+
+        if self.position == 0:
+            self.wage = 3
+        elif self.position == 1:
+            self.wage = 2
+        elif self.position == 2:
+            self.wage = 0.1
 
 class Super_data:
     def __init__(self):
@@ -47,13 +67,7 @@ class Super_data:
         # c = self._get_db().cursor()
 
     def _get_db(self):
-        # db = g.get('_database', None)
-        # if db is None:
-        #     db = g._databdase
         db = sqlite3.connect(self.DATABASE, detect_types=sqlite3.PARSE_DECLTYPES)
-        # db = g.get('_database', None)
-        # if db is None:
-        #     db = g._databdase = sqlite3.connect(self.DATABASE)
         return db
 
     def close_connection(self):
@@ -64,11 +78,14 @@ class Super_data:
     def get_item_list(self):
         pass
 
+    def register_item(self, item):
+        c = self._get_db().cursor()
+
 
 
     def login_success(self, user, password):
         c = self._get_db().cursor()
-        c.execute("SELECT password FROM users WHERE username = ?", (user,))
+        c.execute("SELECT password FROM employees WHERE username = ?", (user,))
         r = c.fetchone()
         if r is not None:
             db_pw = r[0]
@@ -79,12 +96,12 @@ class Super_data:
     def register_user(self, user, password):
         db = self._get_db()
         c = db.cursor()
-        c.execute("SELECT * FROM users WHERE username = ?", (user,))
+        c.execute("SELECT * FROM employees WHERE username = ?", (user,))
         found_user = c.fetchone()
         if found_user:
             res = False
         else:
-            c.execute("INSERT INTO users (username, password) VALUES (?,?)", (user, password))
+            c.execute("INSERT INTO employees (username, password) VALUES (?,?)", (user, password))
             db.commit()
             res = True
         return res
@@ -100,10 +117,20 @@ class Super_data:
 
         c = db.cursor()
         try:
-            c.execute("""CREATE TABLE users (
+            c.execute("""CREATE TABLE employees (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT,
                 password TEXT);""")
+        except Exception as e:
+            print(e)
+        try:
+            c.execute("""CREATE TABLE items (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT,
+                item_id TEXT,
+                price,
+                discount_price
+                );""")
         except Exception as e:
             print(e)
 
