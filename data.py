@@ -3,21 +3,17 @@
 import sqlite3
 from datetime import datetime
 
-class item:
-    def __init__(self):
-        name = "henrik"
-        creation_date = "date"
-        expiration_date = "date"
-        price = 0
-        item_id = "item_id_class"
-        discount_price = 0
-        stock = 3
+class item_type:
+    def __init__(self, name, price, discount_price, item_id):
+        self.name = name
+        self.price = price
+        self.discount_price = discount_price
+        self.item_id = item_id
+        self.stock = 0
 
 class item_id:
     def __init__(self):
         pass
-
-
 
 class barcode(item_id):
     def __init__(self):
