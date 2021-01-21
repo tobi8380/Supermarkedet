@@ -51,16 +51,16 @@ class supermarket_gui(ttk.Frame):
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
-        bog_fane = ttk.Frame(self.tabs)
+        admin_fane = ttk.Frame(self.tabs)
         sim_fane = ttk.Frame(self.tabs)
 
-        self.tabs.add(bog_fane, text='Bøger')
+        self.tabs.add(admin_fane, text='Administrator')
         self.tabs.add(sim_fane, text='Simulering')
 
-        right_frame = ttk.Frame(bog_fane)
+        right_frame = ttk.Frame(admin_fane)
         top_frame = ttk.Frame(right_frame)
         data_frame = ttk.Frame(right_frame)
-        knap_frame = ttk.Frame(bog_fane)
+        knap_frame = ttk.Frame(admin_fane)
 
 
         self.edit_button = ttk.Button(knap_frame, text="Rediger vare", command=self.do_nothing)
@@ -98,17 +98,16 @@ class supermarket_gui(ttk.Frame):
 
         self.db_view = ttk.Treeview(data_frame, column=("column1", "column2", "column3", "column4", "column5"), show='headings')
         self.db_view.bind("<ButtonRelease-1>", self.do_nothing)
-        self.db_view.heading("#1", text="Titel", command=self.do_nothing)
+        self.db_view.heading("#1", text="Navn", command=self.do_nothing)
         self.db_view.column("#1",minwidth=0,width=150, stretch=tk.NO)
-        self.db_view.heading("#2", text="Forfatter", command=self.do_nothing)
+        self.db_view.heading("#2", text="Antal", command=self.do_nothing)
         self.db_view.column("#2",minwidth=0,width=150, stretch=tk.NO)
-        self.db_view.heading("#3", text="Årstal", command=self.do_nothing)
+        self.db_view.heading("#3", text="Pris", command=self.do_nothing)
         self.db_view.column("#3",minwidth=0,width=80, stretch=tk.NO)
-        self.db_view.heading("#4", text="Rating", command=self.do_nothing)
+        self.db_view.heading("#4", text="id", command=self.do_nothing)
         self.db_view.column("#4",minwidth=0,width=80, stretch=tk.NO)
-        self.db_view.heading("#5", text="id")
         #Læg mærke til at kolonne 5 ikke bliver vist.
-        #Vi kan stadig finde id på den bog der er valgt,
+        #Vi kan stadig finde id på den admin der er valgt,
         #men brugeren kan ikke se id.
         self.db_view["displaycolumns"]=("column1", "column2", "column3", "column4")
         ysb = ttk.Scrollbar(data_frame, command=self.db_view.yview, orient=tk.VERTICAL)
