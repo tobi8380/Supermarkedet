@@ -149,7 +149,7 @@ class supermarket_gui(ttk.Frame):
         self.after(10000, self.do_nothing)
         self.after(1000, self.do_nothing)
 
-    def do_nothing():
+    def do_nothing(self):
         pass
 
 root = tk.Tk()
