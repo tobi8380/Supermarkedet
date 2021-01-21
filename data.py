@@ -19,15 +19,6 @@ class barcode(item_id):
     def __init__(self):
         pass
 
-class item_code(item_id):
-    def __init__(self):
-        pass
-
-
-class barcode(item_id):
-    def __init__(self):
-        pass
-
     def check_valid_id(self):
         pass
 
