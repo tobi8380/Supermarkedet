@@ -102,13 +102,12 @@ def login_verify():
 # Designing popup for login success
 
 def login_sucess():
-    global login_success_screen, logged_in
+    global login_success_screen
     login_success_screen = Toplevel(login_screen)
     login_success_screen.title("Success")
     login_success_screen.geometry("150x75")
     Label(login_success_screen, text="Logget ind").pack()
     Button(login_success_screen, text="OK", command=delete_login_success).pack()
-    logged_in = True
 
 # Designing popup for login success
 
