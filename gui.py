@@ -10,7 +10,8 @@ super_data.register_user("1", "a")
 class supermarket_gui(ttk.Frame):
     def __init__(self, master=None):
         ttk.Frame.__init__(self, master)
-        admin_password = 1234
+
+        self.admin_password = "1234"
         logged_in = False
 
         if logged_in == True:
@@ -51,6 +52,7 @@ class supermarket_gui(ttk.Frame):
         self.password_login_entry.delete(0, "end")
 
     def create_user_screen(self):
+        self.verify_admin_password = tk.StringVar()
         self.password_register = tk.StringVar()
         self.username_register = tk.StringVar()
 
@@ -60,8 +62,8 @@ class supermarket_gui(ttk.Frame):
 
 
         tk.Label(create_user_screen, text="Admin kode * ").pack()
-        self.admin_password_register_entry = tk.Entry(create_user_screen, textvariable=self.admin_password_register)
-        self.admin_password_register_entry.pack()
+        self.verify_admin_password_entry = tk.Entry(create_user_screen, textvariable=self.verify_admin_password)
+        self.verify_admin_password_entry.pack()
         tk.Label(create_user_screen, text="").pack()
         tk.Label(create_user_screen, text="Brugernavn * ").pack()
         self.password_register_entry = tk.Entry(create_user_screen, textvariable=self.username_register)
@@ -75,19 +77,22 @@ class supermarket_gui(ttk.Frame):
         tk.Button(create_user_screen, text="Opret bruger", width=10, height=1, command=self.create_user).pack()
 
     def create_user(self):
-        # admin_password = self.admin_password
-        # print(admin_password)
-        admin_password_entry = self.admin_password_register.get()
+        admin_password_verify = self.admin_password
+        print(admin_password_verify)
+
+        admin_password_entry = self.verify_admin_password.get()
+        print(admin_password_entry)
+
         username = self.username_register.get()
         password = self.password_register.get()
 
-        print(username)
-        print(admin_password_entry)
-
-        if super_data.register_user(username, password):
-            print("bruger oprettet")
+        if admin_password_entry == admin_password_verify:
+            if super_data.register_user(username, password):
+                print("bruger oprettet")
+            else:
+                print("Fejl ved oprettelse")
         else:
-            print("Fejl ved oprettelse")
+            print("fuck af ungarbejder")
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
