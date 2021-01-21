@@ -36,6 +36,8 @@ class supermarket_gui(ttk.Frame):
         self.password_login_entry.pack()
         tk.Label(login_screen, text="").pack()
         tk.Button(login_screen, text="Login", width=10, height=1, command=self.login_verify).pack()
+        tk.Label(login_screen, text="").pack()
+        tk.Button(login_screen, text="Opret bruger", width=10, height=1, command=self.create_user).pack()
 
     def login_verify(self):
         username = self.username_verify.get()
@@ -47,6 +49,9 @@ class supermarket_gui(ttk.Frame):
 
         self.username_login_entry.delete(0, "end")
         self.password_login_entry.delete(0, "end")
+
+    def create_user(self):
+        pass
 
 
     def build_GUI(self):
