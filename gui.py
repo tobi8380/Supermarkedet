@@ -18,6 +18,8 @@ class supermarket_gui(ttk.Frame):
         else:
             self.login_gui()
 
+        self.admin_password = 1234
+
     def login_gui(self):
         login_screen = tk.Toplevel(self.master)
         login_screen.title("Login")
@@ -58,6 +60,11 @@ class supermarket_gui(ttk.Frame):
         create_user_screen.title("Registrer bruger")
         create_user_screen.geometry("300x250")
 
+
+        tk.Label(create_user_screen, text="Admin kode * ").pack()
+        self.admin_password_register_entry = tk.Entry(create_user_screen, textvariable=self.verify_admin_password)
+        self.admin_password_register_entry.pack()
+        tk.Label(create_user_screen, text="").pack()
         tk.Label(create_user_screen, text="Brugernavn * ").pack()
         self.password_register_entry = tk.Entry(create_user_screen, textvariable=self.username_register)
         self.password_register_entry.pack()
@@ -66,11 +73,20 @@ class supermarket_gui(ttk.Frame):
         self.username_register_entry = tk.Entry(create_user_screen, textvariable=self.password_register)
         self.username_register_entry.pack()
 
+
         tk.Button(create_user_screen, text="Opret bruger", width=10, height=1, command=self.create_user).pack()
 
     def create_user(self):
-        super_data.register_user("username_register_entry", "password_register_entry")
-        print("bruger oprettet")
+        username = self.username_register.get()
+        password = self.password_register.get()
+
+        if super_data.register_user(username, password):
+            print("bruger oprettet")
+        else:
+            print("Fejl ved oprettelse")
+
+    def verify_admin_password(self):
+        pass
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
