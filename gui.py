@@ -3,9 +3,9 @@ import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 import os
 
-import login_gui
 from data import Super_data
-
+super_data = Super_data()
+super_data.register_user("1", "a")
 
 class supermarket_gui(ttk.Frame):
     def __init__(self, master=None):
@@ -19,7 +19,35 @@ class supermarket_gui(ttk.Frame):
             self.login_gui()
 
     def login_gui(self):
-        login_gui.main_account_screen()
+        login_screen = tk.Toplevel(self.master)
+        login_screen.title("Login")
+        login_screen.geometry("300x250")
+        # login_gui.main_account_screen()
+
+        self.password_verify = tk.StringVar()
+        self.username_verify = tk.StringVar()
+
+        tk.Label(login_screen, text="Brugernavn * ").pack()
+        self.username_login_entry = tk.Entry(login_screen, textvariable=self.username_verify)
+        self.username_login_entry.pack()
+        tk.Label(login_screen, text="").pack()
+        tk.Label(login_screen, text="Kode * ").pack()
+        self.password_login_entry = tk.Entry(login_screen, textvariable=self.password_verify, show= '*')
+        self.password_login_entry.pack()
+        tk.Label(login_screen, text="").pack()
+        tk.Button(login_screen, text="Login", width=10, height=1, command=self.login_verify).pack()
+
+    def login_verify(self):
+        username = self.username_verify.get()
+        password = self.password_verify.get()
+        if super_data.login_success(username, password):
+            self.build_GUI()
+        else:
+            print("incorrect credentials")
+
+        self.username_login_entry.delete(0, "end")
+        self.password_login_entry.delete(0, "end")
+
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
@@ -35,16 +63,16 @@ class supermarket_gui(ttk.Frame):
         knap_frame = ttk.Frame(bog_fane)
 
 
-        self.edit_button = ttk.Button(knap_frame, text="Rediger bog", command=self.do_nothing)
+        self.edit_button = ttk.Button(knap_frame, text="Rediger vare", command=self.do_nothing)
         self.edit_button.pack(side=tk.TOP)
 
-        self.del_button = ttk.Button(knap_frame, text="Slet bog", command=self.do_nothing)
+        self.del_button = ttk.Button(knap_frame, text="Slet vare", command=self.do_nothing)
         self.del_button.pack(side=tk.TOP)
 
-        self.add_button = ttk.Button(knap_frame, text="Tilføj til kurv", command=self.do_nothing)
+        self.add_button = ttk.Button(knap_frame, text="Tilføj ny vare", command=self.do_nothing)
         self.add_button.pack(side=tk.TOP)
 
-        self.buy_button = ttk.Button(knap_frame, text="Køb", command=self.do_nothing)
+        self.buy_button = ttk.Button(knap_frame, text="Bestil varer", command=self.do_nothing)
         self.buy_button.pack(side=tk.TOP)
 
         self.kurv_text = ScrolledText(knap_frame, state='disabled', width=20,height=5)
@@ -117,10 +145,10 @@ class supermarket_gui(ttk.Frame):
 
         self.pack()
 
-        self.after(10000, self.do_nothing)
-        self.after(1000, self.do_nothing)
-
-    def do_nothing():
+    #     self.after(10000, self.do_nothing)
+    #     self.after(1000, self.do_nothing)
+    #
+    def do_nothing(self):
         pass
 
 root = tk.Tk()
