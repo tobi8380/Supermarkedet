@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 import os
-
+from tkinter import messagebox
 from data import Super_data
 super_data = Super_data()
 super_data.register_user("1", "a")
@@ -92,7 +92,7 @@ class supermarket_gui(ttk.Frame):
             else:
                 print("Fejl ved oprettelse")
         else:
-            print("fuck af ungarbejder")
+            messagebox.showerror(title="SÅ FUCK DOG AF", message="NEJ, DU ER SLET IKKE SEJ NOK TIL DETTE, DIN SKIDE UNGARBEJDER")
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
