@@ -9,28 +9,19 @@ class item_type:
         self.price = price
         self.discount_price = discount_price
         self.item_id = item_id
+        self.stock = 0
 
+class item_id:
+    def __init__(self):
+        pass
 
-<<<<<<< HEAD
-class item_delivery:
-    def __init__(self, item_type, stock, arrival_date, expiration_date):
-        self.item_type = item_type
-        self.stock = stock
-        self.arrival_date = arrival_date
-        self.expiration_date = expiration_date
+class barcode(item_id):
+    def __init__(self):
+        pass
 
-# class item_id:
-#     def __init__(self):
-#         pass
-#
-# class barcode(item_id):
-#     def __init__(self):
-#         pass
-#
-# class item_code(item_id):
-#     def __init__(self):
-#         pass
-=======
+class item_code(item_id):
+    def __init__(self):
+        pass
 
 
 class barcode(item_id):
@@ -43,7 +34,7 @@ class barcode(item_id):
 class item_code(item_id):
     def __init__(self):
         pass
->>>>>>> main
+
 
     def check_valid_id(self):
         pass
