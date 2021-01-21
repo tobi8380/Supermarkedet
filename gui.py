@@ -27,7 +27,7 @@ class supermarket_gui(ttk.Frame):
         self.password_verify = tk.StringVar()
         self.username_verify = tk.StringVar()
 
-        tk.Label(login_screen, text="Brugernanvn * ").pack()
+        tk.Label(login_screen, text="Brugernavn * ").pack()
         self.username_login_entry = tk.Entry(login_screen, textvariable=self.username_verify)
         self.username_login_entry.pack()
         tk.Label(login_screen, text="").pack()
@@ -35,7 +35,7 @@ class supermarket_gui(ttk.Frame):
         self.password_login_entry = tk.Entry(login_screen, textvariable=self.password_verify, show= '*')
         self.password_login_entry.pack()
         tk.Label(login_screen, text="").pack()
-        tk.Button(login_screen, text="Login", width=10, height=1, command = self.login_verify).pack()
+        tk.Button(login_screen, text="Login", width=10, height=1, command=self.login_verify).pack()
 
     def login_verify(self):
         username = self.username_verify.get()
