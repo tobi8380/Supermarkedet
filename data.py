@@ -11,6 +11,7 @@ class item_type:
         self.item_id = item_id
 
 
+<<<<<<< HEAD
 class item_delivery:
     def __init__(self, item_type, stock, arrival_date, expiration_date):
         self.item_type = item_type
@@ -29,6 +30,23 @@ class item_delivery:
 # class item_code(item_id):
 #     def __init__(self):
 #         pass
+=======
+
+
+class barcode(item_id):
+    def __init__(self):
+        pass
+
+    def check_valid_id(self):
+        pass
+
+class item_code(item_id):
+    def __init__(self):
+        pass
+>>>>>>> main
+
+    def check_valid_id(self):
+        pass
 
 class Employee:
     def __init__(self):
