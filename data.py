@@ -112,7 +112,7 @@ class Super_data:
             db_position = r[1]
             if db_pw == password:
                 return db_position
-                
+
         return None
 
     def register_user(self, user, password):
