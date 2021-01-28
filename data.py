@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 
 class Item:
-    def __init__(self, name, price, discount_price, item_id, discount=False, stock=0):
+    def __init__(self, name, price, item_id, discount=False, stock=0):
         """
         Husk try except ved instans af item
         """
@@ -14,11 +14,10 @@ class Item:
         elif price <= 0 or discount_price <= 0:
             raise Exception("Prøver du at gøre vores produkter gratis kælling?")
 
-
         self.name = name
         self.price = price
-        self.discount_price = discount_price
-        self.item_id = item_id
+        self.discount_price = price
+        self.item_id = Item_id(item_id)
         self.discount = discount
         self.stock = stock
 
@@ -77,20 +76,27 @@ class Super_data:
 
     def register_item(self, item):
         c = self._get_db().cursor()
-        c.execute("""INSERT INTO items
-                        (name,
-                        item_id,
-                        price,
-                        discount_price,
-                        discount,
-                        stock) VALUES (?,?,?,?,?,?)""",
-                        item.name,
-                        item.item_id.id,
-                        item.price,
-                        item.discount_price,
-                        item.discount,
-                        item.stock)
-
+        c.execute("SELECT * FROM items WHERE item_id = ?", (item.item_id.id,))
+        found_item = c.fetchone()
+        if found_item:
+            res = False
+        else:
+            c.execute("""INSERT INTO items
+                            (name,
+                            item_id,
+                            price,
+                            discount_price,
+                            discount,
+                            stock) VALUES (?,?,?,?,?,?)""",
+                            item.name,
+                            item.item_id.id,
+                            item.price,
+                            item.discount_price,
+                            item.discount,
+                            item.stock)
+            db.commit()
+            res = True
+        return res
 
 
     def login_success(self, user, password):
