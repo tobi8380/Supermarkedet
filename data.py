@@ -101,13 +101,15 @@ class Super_data:
 
     def login_success(self, user, password):
         c = self._get_db().cursor()
-        c.execute("SELECT password FROM employees WHERE username = ?", (user,))
+        c.execute("SELECT (password, position) FROM employees WHERE username = ?", (user,))
         r = c.fetchone()
         if r is not None:
             db_pw = r[0]
-        else:
-            return False
-        return db_pw == password
+            db_position = r[1]
+            if db_pw == password:
+                return db_position
+                
+        return None
 
     def register_user(self, user, password):
         db = self._get_db()
@@ -136,7 +138,9 @@ class Super_data:
             c.execute("""CREATE TABLE employees (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT,
-                password TEXT);""")
+                password TEXT,
+                position INTEGER,
+                cpr TEXT);""")
         except Exception as e:
             print(e)
         try:
@@ -151,7 +155,6 @@ class Super_data:
                 );""")
         except Exception as e:
             print(e)
-
 
         db.commit()
         return 'Database tables created'

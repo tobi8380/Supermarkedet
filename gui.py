@@ -40,7 +40,8 @@ class supermarket_gui(ttk.Frame):
     def login_verify(self):
         username = self.username_verify.get()
         password = self.password_verify.get()
-        if super_data.login_success(username, password):
+        self.current_user_position = super_data.login_success(username, password)
+        if self.current_user_position != None:
             self.build_GUI()
         else:
             print("incorrect credentials")
