@@ -51,33 +51,40 @@ class supermarket_gui(ttk.Frame):
 
     def new_item(self):
         print('new item')
-        self.new_item_name_name = tk.StringVar()
+        self.new_item_name = tk.StringVar()
         self.new_item_id = tk.StringVar()
-        self.new_item_price_price = tk.StringVar()
+        self.new_item_price = tk.StringVar()
+        self.item_discount_price = tk.StringVar()
 
         new_item_screen = tk.Toplevel(self.master)
         new_item_screen.title("Ny vare")
         new_item_screen.geometry("300x250")
 
         tk.Label(new_item_screen, text="Varenavn * ").pack()
-        self.new_item_name = tk.Entry(new_item_screen, textvariable=self.new_item_name_name)
-        self.new_item_name.pack()
+        self.new_item_entry = tk.Entry(new_item_screen, textvariable=self.new_item_name)
+        self.new_item_entry.pack()
 
         tk.Label(new_item_screen, text="VareID * ").pack()
-        self.new_item_id = tk.Entry(new_item_screen, textvariable=self.new_item_id)
-        self.new_item_id.pack()
+        self.new_item_id_entry = tk.Entry(new_item_screen, textvariable=self.new_item_id)
+        self.new_item_id_entry.pack()
 
         tk.Label(new_item_screen, text="Varens pris * ").pack()
-        self.new_item_price = tk.Entry(new_item_screen, textvariable=self.new_item_price_price)
-        self.new_item_price.pack()
+        self.new_item_price_entry = tk.Entry(new_item_screen, textvariable=self.new_item_price)
+        self.new_item_price_entry.pack()
+
+        tk.Label(new_item_screen, text="Varens udsalgspris * ").pack()
+        self.item_discount_entry = tk.Entry(new_item_screen, textvariable=self.item_discount_price)
+        self.item_discount_entry.pack()
 
         tk.Button(new_item_screen, text="Opret vare", width=10, height=1, command=self.new_item_add).pack()
 
     def new_item_add(self):
-            item_name = self.new_item_name_name.get()
+            item_name = self.new_item_name.get()
             item_id = self.new_item_id.get()
-            item_price = self.new_item_price_price.get()
-            print(item_name, item_id, item_price)
+            item_price = self.new_item_price.get()
+            item_discount_price = self.item_discount_price.get()
+            print(item_name, item_id, item_price,item_discount_price)
+
             
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
