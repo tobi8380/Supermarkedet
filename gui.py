@@ -95,28 +95,36 @@ class supermarket_gui(ttk.Frame):
 
     def new_shipment_verify(self):
         pass
-        
+
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
         admin_fane = ttk.Frame(self.tabs)
         sim_fane = ttk.Frame(self.tabs)
-        stock_fane = ttk.Frame(self.tabs)
 
         self.tabs.add(admin_fane, text='Administrator')
         self.tabs.add(sim_fane, text='Simulering')
-        self.tabs.add(stock_fane, text='Lager')
 
         right_frame = ttk.Frame(admin_fane)
-        righttop_frame = ttk.Frame(right_frame)
-        rightbot_frame = ttk.Frame(right_frame)
+        top_frame = ttk.Frame(right_frame)
         data_frame = ttk.Frame(right_frame)
         knap_frame = ttk.Frame(admin_fane)
-        stock_dat_frame = ttk.Frame(stock_fane)
 
 
-        self.buy_button = ttk.Button(rightbot_frame, text="Fyre knappen", command=self.do_nothing)
+        self.edit_button = ttk.Button(knap_frame, text="Rediger vare", command=self.do_nothing)
+        self.edit_button.pack(side=tk.TOP)
+
+        self.del_button = ttk.Button(knap_frame, text="Slet vare", command=self.do_nothing)
+        self.del_button.pack(side=tk.TOP)
+
+        self.add_button = ttk.Button(knap_frame, text="Tilføj ny vare", command=self.do_nothing)
+        self.add_button.pack(side=tk.TOP)
+
+        self.buy_button = ttk.Button(knap_frame, text="Bestil varer", command=self.do_nothing)
         self.buy_button.pack(side=tk.TOP)
 
+        self.kurv_text = ScrolledText(knap_frame, state='disabled', width=20,height=5)
+        self.kurv_text.pack(side=tk.TOP)
+        self.kurv_text.configure(font='TkFixedFont')
 
         self.cons = ScrolledText(sim_fane, state='disabled', height=12)
         self.cons.pack(side = tk.TOP)
@@ -135,7 +143,7 @@ class supermarket_gui(ttk.Frame):
         self.sc_tilbud = ttk.LabeledScale (sim_fane,from_=50,to=110)
         self.sc_tilbud.pack(side=tk.TOP)
 
-        self.db_view = ttk.Treeview(righttop_frame, column=("column1", "column2", "column3", "column4"), selectmode='none', height=7)
+        self.db_view = ttk.Treeview(data_frame, column=("column1", "column2", "column3", "column4"), selectmode='none', height=7)
         self.db_view.grid(row=0, column=0, sticky='nsew')
         self.db_view.bind("<ButtonRelease-1>")
         self.db_view.heading("#1", text="Navn", anchor='center')
@@ -150,7 +158,7 @@ class supermarket_gui(ttk.Frame):
         #Vi kan stadig finde id på den admin der er valgt,
         #men brugeren kan ikke se id.
         self.db_view["displaycolumns"]=("column1", "column2", "column3", "column4")
-        ysb = ttk.Scrollbar(righttop_frame, command=self.db_view.yview, orient=tk.VERTICAL)
+        ysb = ttk.Scrollbar(data_frame, command=self.db_view.yview, orient=tk.VERTICAL)
         self.db_view.configure(yscrollcommand=ysb.set)
         self.db_view.pack(side = tk.TOP, fill=tk.BOTH)
         # Insert image to #0
@@ -158,47 +166,36 @@ class supermarket_gui(ttk.Frame):
         self._img = tk.PhotoImage(file="Kim.png") #change to your file path
         self.db_view.insert('', 'end', image=self._img, value=("Kim", "Slave", "1 krone", "1"))
 
-        self._img = tk.PhotoImage(file="Tobais.png") #change to your file path
-        self.db_view.insert('', 'end', image=self._img, value=("Tobais", "Slave", "1 krone", "1"))
+        # self._img = tk.PhotoImage(file="Tobais.png") #change to your file path
+        # self.db_view.insert('', 'end', image=self._img, value=("Tobais", "Slave", "1 krone", "1"))
 
-        self.trans_view = ttk.Treeview(stock_dat_frame, column=("column1", "column2", "column3", "column4", "column5"), selectmode='none', height=7)
-        self.trans_view.bind("<ButtonRelease-1>")
-        self.trans_view.heading("#0", text="id", anchor='center')
-        self.trans_view.column("#0",minwidth=0,width=80, stretch=tk.NO)
-        self.trans_view.heading("#1", text="Vare", anchor='center')
-        self.trans_view.column("#1",minwidth=0,width=80, stretch=tk.NO)
-        self.trans_view.heading("#2", text="Antal", anchor='center')
-        self.trans_view.column("#2",minwidth=0,width=80, stretch=tk.NO)
-        self.trans_view.heading("#3", text="Pris", anchor='center')
+        self.trans_view = ttk.Treeview(knap_frame, column=("column1", "column2", "column3"), show='headings')
+        self.trans_view.bind("<ButtonRelease-1>", self.do_nothing)
+        self.trans_view.heading("#1", text="id")
+        self.trans_view.column("#1",minwidth=0,width=20, stretch=tk.NO)
+        self.trans_view.heading("#2", text="Pris")
+        self.trans_view.column("#2",minwidth=0,width=30, stretch=tk.NO)
+        self.trans_view.heading("#3", text="Status")
         self.trans_view.column("#3",minwidth=0,width=80, stretch=tk.NO)
-        self.trans_view.heading("#4", text="Discount pris", anchor='center')
-        self.trans_view.column("#4",minwidth=0,width=80, stretch=tk.NO)
-        self.trans_view.heading("#5", text="Udsalg?", anchor='center')
-        self.trans_view.column("#5",minwidth=0,width=80, stretch=tk.NO)
-        self.trans_view["displaycolumns"]=("column1", "column2", "column3", "column4", "column5")
-        ysb = ttk.Scrollbar(stock_dat_frame, command=self.trans_view.yview, orient=tk.VERTICAL)
+        self.trans_view["displaycolumns"]=("column1", "column2", "column3")
+        ysb = ttk.Scrollbar(data_frame, command=self.trans_view.yview, orient=tk.VERTICAL)
         self.trans_view.configure(yscrollcommand=ysb.set)
         self.trans_view.pack(side = tk.TOP, fill=tk.BOTH)
 
         #Top Frame
+        self.can = tk.Canvas(top_frame, width=200, height=200)
+        self.can.grid(column=1, row=0, rowspan=2)
 
+        self.lbl_titel = ttk.Label(top_frame, text='Titel')
+        self.lbl_forfatter = ttk.Label(top_frame, text='Forfatter')
+        self.lbl_titel.grid(column=0, row=0)
+        self.lbl_forfatter.grid(column=0, row=1)
 
-        #Lager-fane
-        self.new_item_button = ttk.Button(stock_fane, text="Ny vare", command=self.new_item)
-        self.new_item_button.pack(side=tk.LEFT)
-
-        # self.buy_button = ttk.Button(knap_frame, text="Bestil varer", command=self.do_nothing)
-        # self.buy_button.pack(side=tk.TOP)
-
-
-        righttop_frame.pack(side=tk.TOP)
-        rightbot_frame.pack(side=tk.BOTTOM)
+        top_frame.pack(side=tk.TOP)
         data_frame.pack(side = tk.TOP)
-        stock_dat_frame.pack(side = tk.BOTTOM)
         knap_frame.pack(side = tk.LEFT, fill=tk.Y)
         right_frame.pack(side=tk.RIGHT, fill=tk.Y)
         self.tabs.pack(expand=1, fill="both")
-
 
         self.pack()
 
