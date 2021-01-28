@@ -115,7 +115,14 @@ class supermarket_gui(ttk.Frame):
 
             tk.Button(new_item_screen, text="Opret vare", width=10, height=1, command=self.new_item_add).pack()
 
+            new_shipment_screen = tk.Toplevel(self.master)
+            new_shipment_screen.title("Ny varemodtagelse")
+            new_shipment_screen.geometry("300x250")
 
+            tk.Button(new_shipment_screen, text="Godkend varemodtagelse", width=10, height=1, command=self.new_item_add).pack()
+
+    def new_shipment_verify(self):
+        pass
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
         admin_fane = ttk.Frame(self.tabs)
