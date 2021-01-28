@@ -3,7 +3,7 @@
 import sqlite3
 from datetime import datetime
 
-class item:
+class Item:
     def __init__(self, name, price, discount_price, item_id):
         """
         Husk try except ved instans af item
@@ -22,20 +22,17 @@ class item:
         self.stock = 0
 
 
-class item_id:
-    def __init__(self):
-        pass
+class Item_id:
 
-class barcode(item_id):
-    def __init__(self):
-        pass
+    def __init__(self, id):
+        self.id = id
+
+class Barcode(item_id):
 
     def check_valid_id(self):
         pass
 
-class item_code(item_id):
-    def __init__(self):
-        pass
+class Item_code(item_id):
 
     def check_valid_id(self):
         pass
