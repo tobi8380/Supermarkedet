@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 
 class Item:
-    def __init__(self, name, price, discount_price, item_id):
+    def __init__(self, name, price, discount_price, item_id, discount=False, stock=0):
         """
         Husk try except ved instans af item
         """
@@ -19,7 +19,8 @@ class Item:
         self.price = price
         self.discount_price = discount_price
         self.item_id = item_id
-        self.stock = 0
+        self.discount = discount
+        self.stock = stock
 
 
 class Item_id:
@@ -27,12 +28,12 @@ class Item_id:
     def __init__(self, id):
         self.id = id
 
-class Barcode(item_id):
+class Barcode(Item_id):
 
     def check_valid_id(self):
         pass
 
-class Item_code(item_id):
+class Item_code(Item_id):
 
     def check_valid_id(self):
         pass
@@ -76,6 +77,19 @@ class Super_data:
 
     def register_item(self, item):
         c = self._get_db().cursor()
+        c.execute("""INSERT INTO items
+                        (name,
+                        item_id,
+                        price,
+                        discount_price,
+                        discount,
+                        stock) VALUES (?,?,?,?,?,?)""",
+                        item.name,
+                        item.item_id.id,
+                        item.price,
+                        item.discount_price,
+                        item.discount,
+                        item.stock)
 
 
 
@@ -124,8 +138,10 @@ class Super_data:
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT,
                 item_id TEXT,
-                price,
-                discount_price
+                price REAL,
+                discount_price REAL,
+                discount INTEGER,
+                stock INTEGER,
                 );""")
         except Exception as e:
             print(e)

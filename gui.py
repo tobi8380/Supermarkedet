@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 import os
-from data import Super_data, item, Employee
+from data import Super_data, Item, Employee, Item_id, Barcode, Item_code
 
 super_data = Super_data()
 super_data.register_user("1", "a")
