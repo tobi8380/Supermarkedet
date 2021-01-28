@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
+from tkinter import PhotoImage
 import os
 
 from data import Super_data
@@ -96,15 +97,16 @@ class supermarket_gui(ttk.Frame):
         self.sc_tilbud = ttk.LabeledScale (sim_fane,from_=50,to=110)
         self.sc_tilbud.pack(side=tk.TOP)
 
-        self.db_view = ttk.Treeview(data_frame, column=("column1", "column2", "column3", "column4", "column5"), show='headings')
-        self.db_view.bind("<ButtonRelease-1>", self.do_nothing)
-        self.db_view.heading("#1", text="Navn", command=self.do_nothing)
-        self.db_view.column("#1",minwidth=0,width=150, stretch=tk.NO)
-        self.db_view.heading("#2", text="Antal", command=self.do_nothing)
-        self.db_view.column("#2",minwidth=0,width=150, stretch=tk.NO)
-        self.db_view.heading("#3", text="Pris", command=self.do_nothing)
+        self.db_view = ttk.Treeview(data_frame, column=("column1", "column2", "column3", "column4"), selectmode='none', height=7)
+        self.db_view.grid(row=0, column=0, sticky='nsew')
+        self.db_view.bind("<ButtonRelease-1>")
+        self.db_view.heading("#1", text="Navn", anchor='center')
+        self.db_view.column("#1",minwidth=0,width=80, stretch=tk.NO)
+        self.db_view.heading("#2", text="Rolle", anchor='center')
+        self.db_view.column("#2",minwidth=0,width=80, stretch=tk.NO)
+        self.db_view.heading("#3", text="Løn", anchor='center')
         self.db_view.column("#3",minwidth=0,width=80, stretch=tk.NO)
-        self.db_view.heading("#4", text="id", command=self.do_nothing)
+        self.db_view.heading("#4", text="id", anchor='center')
         self.db_view.column("#4",minwidth=0,width=80, stretch=tk.NO)
         #Læg mærke til at kolonne 5 ikke bliver vist.
         #Vi kan stadig finde id på den admin der er valgt,
@@ -113,6 +115,13 @@ class supermarket_gui(ttk.Frame):
         ysb = ttk.Scrollbar(data_frame, command=self.db_view.yview, orient=tk.VERTICAL)
         self.db_view.configure(yscrollcommand=ysb.set)
         self.db_view.pack(side = tk.TOP, fill=tk.BOTH)
+        # Insert image to #0
+
+        self._img = tk.PhotoImage(file="Kim.png") #change to your file path
+        self.db_view.insert('', 'end', image=self._img, value=("Kim", "Slave", "1 krone", "1"))
+
+        # self._img = tk.PhotoImage(file="Tobais.png") #change to your file path
+        # self.db_view.insert('', 'end', image=self._img, value=("Tobais", "Slave", "1 krone", "1"))
 
         self.trans_view = ttk.Treeview(knap_frame, column=("column1", "column2", "column3"), show='headings')
         self.trans_view.bind("<ButtonRelease-1>", self.do_nothing)
