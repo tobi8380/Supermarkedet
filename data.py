@@ -43,6 +43,7 @@ class Item_code(Item_id):
 2: Lorte ungarbejderererere
 """
 class Employee:
+
     def __init__(self, name, password, position, cpr):
         self.name = name
         self.password = password
@@ -55,6 +56,7 @@ class Employee:
             self.wage = 2
         elif self.position == 2:
             self.wage = 0.1
+
 
 class Super_data:
     def __init__(self):
@@ -73,6 +75,7 @@ class Super_data:
 
     def get_item_list(self):
         pass
+
 
     def register_item(self, item):
         c = self._get_db().cursor()
@@ -97,6 +100,7 @@ class Super_data:
             db.commit()
             res = True
         return res
+
 
 
     def login_success(self, user, password):
