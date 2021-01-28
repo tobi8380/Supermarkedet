@@ -54,9 +54,11 @@ class supermarket_gui(ttk.Frame):
         self.tabs = ttk.Notebook(self)
         admin_fane = ttk.Frame(self.tabs)
         sim_fane = ttk.Frame(self.tabs)
+        stock_fane = ttk.Frame(self.tabs)
 
         self.tabs.add(admin_fane, text='Administrator')
         self.tabs.add(sim_fane, text='Simulering')
+        self.tabs.add(stock_fane, text='Lager')
 
         right_frame = ttk.Frame(admin_fane)
         top_frame = ttk.Frame(right_frame)
@@ -120,8 +122,8 @@ class supermarket_gui(ttk.Frame):
         self._img = tk.PhotoImage(file="Kim.png") #change to your file path
         self.db_view.insert('', 'end', image=self._img, value=("Kim", "Slave", "1 krone", "1"))
 
-        # self._img = tk.PhotoImage(file="Tobais.png") #change to your file path
-        # self.db_view.insert('', 'end', image=self._img, value=("Tobais", "Slave", "1 krone", "1"))
+        self._img = tk.PhotoImage(file="Tobais.png") #change to your file path
+        self.db_view.insert('', 'end', image=self._img, value=("Tobais", "Slave", "1 krone", "1"))
 
         self.trans_view = ttk.Treeview(knap_frame, column=("column1", "column2", "column3"), show='headings')
         self.trans_view.bind("<ButtonRelease-1>", self.do_nothing)
