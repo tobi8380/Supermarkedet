@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 
 class Item:
-    def __init__(self, name, price, item_id, discount=False, stock=0):
+    def __init__(self, name, price, item_id, discount_price, discount=False, stock=0):
         """
         Husk try except ved instans af item
         """
@@ -105,17 +105,19 @@ class Super_data:
 
     def login_success(self, user, password):
         c = self._get_db().cursor()
-        c.execute("SELECT (password, position) FROM employees WHERE username = ?", (user,))
+        c.execute("SELECT password, position FROM employees WHERE username = ?", (user,))
         r = c.fetchone()
         if r is not None:
             db_pw = r[0]
             db_position = r[1]
+            print(db_pw)
+            print(db_position)
             if db_pw == password:
                 return db_position
-                
+
         return None
 
-    def register_user(self, user, password):
+    def register_user(self, user, password, position, cpr):
         db = self._get_db()
         c = db.cursor()
         c.execute("SELECT * FROM employees WHERE username = ?", (user,))
@@ -123,7 +125,14 @@ class Super_data:
         if found_user:
             res = False
         else:
-            c.execute("INSERT INTO employees (username, password) VALUES (?,?)", (user, password))
+            c.execute("""INSERT INTO employees (username,
+                                                password,
+                                                position,
+                                                cpr) VALUES (?,?,?,?)""", (
+                                                user,
+                                                password,
+                                                position,
+                                                cpr))
             db.commit()
             res = True
         return res
@@ -131,7 +140,12 @@ class Super_data:
     def _create_db_tables(self):
         db = self._get_db()
         # try:
-        #    db.execute("DROP TABLE IF EXISTS elements;")
+        #    db.execute("DROP TABLE IF EXISTS employees;")
+        #    db.commit()
+        # except:
+        #    print('Fejl ved sletning af tabeller.')
+        # try:
+        #    db.execute("DROP TABLE IF EXISTS items;")
         #    db.commit()
         # except:
         #    print('Fejl ved sletning af tabeller.')

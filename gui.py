@@ -6,7 +6,7 @@ import os
 from data import Super_data, Item, Employee, Item_id, Barcode, Item_code
 
 super_data = Super_data()
-super_data.register_user("1", "a")
+super_data.register_user("1", "a", 1, "1234")
 
 class supermarket_gui(ttk.Frame):
     def __init__(self, master=None):
@@ -81,10 +81,12 @@ class supermarket_gui(ttk.Frame):
 
     def new_item_add(self):
             item_name = self.new_item_name.get()
+            item_price = int(self.new_item_price.get())
             item_id = self.new_item_id.get()
-            item_price = self.new_item_price.get()
-            item_discount_price = self.item_discount_price.get()
-            print(item_name, item_id, item_price,item_discount_price)
+            item_discount_price = int(self.item_discount_price.get())
+
+            Item(item_name, item_price, item_id, item_discount_price)
+            print(item_name, item_id, item_price, item_discount_price)
 
     def new_shipment(self):
             print('new shipment')
