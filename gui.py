@@ -3,8 +3,8 @@ import tkinter.ttk as ttk
 from tkinter.scrolledtext import ScrolledText
 from tkinter import PhotoImage
 import os
+from data import Super_data, Item, Employee, Item_id, Barcode, Item_code
 
-from data import Super_data
 super_data = Super_data()
 super_data.register_user("1", "a")
 
@@ -41,7 +41,8 @@ class supermarket_gui(ttk.Frame):
     def login_verify(self):
         username = self.username_verify.get()
         password = self.password_verify.get()
-        if super_data.login_success(username, password):
+        self.current_user_position = super_data.login_success(username, password)
+        if self.current_user_position != None:
             self.build_GUI()
         else:
             print("incorrect credentials")
@@ -129,8 +130,10 @@ class supermarket_gui(ttk.Frame):
         righttop_frame = ttk.Frame(right_frame)
         rightbot_frame = ttk.Frame(right_frame)
         data_frame = ttk.Frame(right_frame)
+
         knap_frame = ttk.Frame(admin_fane)
         stock_dat_frame = ttk.Frame(stock_fane)
+
 
 
         self.buy_button = ttk.Button(rightbot_frame, text="Fyre knappen", command=self.do_nothing)
