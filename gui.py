@@ -49,6 +49,29 @@ class supermarket_gui(ttk.Frame):
         self.username_login_entry.delete(0, "end")
         self.password_login_entry.delete(0, "end")
 
+    def new_item(self):
+        print('new item')
+        self.new_item_name_name = tk.StringVar()
+        self.new_item_id = tk.StringVar()
+        self.new_item_price_price = tk.StringVar()
+
+        new_item_screen = tk.Toplevel(self.master)
+        new_item_screen.title("Ny vare")
+        new_item_screen.geometry("300x250")
+
+        tk.Label(new_item_screen, text="Varenavn * ").pack()
+        self.new_item_name = tk.Entry(new_item_screen, textvariable=self.new_item_name_name)
+        self.new_item_name.pack()
+
+        tk.Label(new_item_screen, text="VareID * ").pack()
+        self.new_item_id = tk.Entry(new_item_screen, textvariable=self.new_item_id)
+        self.new_item_id.pack()
+
+        tk.Label(new_item_screen, text="Varens pris * ").pack()
+        self.new_item_price = tk.Entry(new_item_screen, textvariable=self.new_item_price_price)
+        self.new_item_price.pack()
+
+        tk.Button(new_item_screen, text="Opret vare", width=10, height=1, command=self.do_nothing).pack()
 
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
@@ -147,11 +170,20 @@ class supermarket_gui(ttk.Frame):
         self.lbl_titel.grid(column=0, row=0)
         self.lbl_forfatter.grid(column=0, row=1)
 
+        #Lager-fane
+        self.new_item_button = ttk.Button(stock_fane, text="Ny vare", command=self.new_item)
+        self.new_item_button.pack(side=tk.LEFT)
+
+        # self.buy_button = ttk.Button(knap_frame, text="Bestil varer", command=self.do_nothing)
+        # self.buy_button.pack(side=tk.TOP)
+
+
         top_frame.pack(side=tk.TOP)
         data_frame.pack(side = tk.TOP)
         knap_frame.pack(side = tk.LEFT, fill=tk.Y)
         right_frame.pack(side=tk.RIGHT, fill=tk.Y)
         self.tabs.pack(expand=1, fill="both")
+
 
         self.pack()
 
