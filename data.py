@@ -23,6 +23,7 @@ class item:
 
 
 
+<<<<<<< Updated upstream
 class item_id:
     def __init__(self):
         pass
@@ -31,6 +32,8 @@ class barcode(item_id):
     def __init__(self):
         pass
 
+=======
+>>>>>>> Stashed changes
     def check_valid_id(self):
         pass
 
