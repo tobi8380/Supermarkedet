@@ -87,34 +87,15 @@ class supermarket_gui(ttk.Frame):
 
     def new_shipment(self):
             print('new shipment')
-            self.new_item_name = tk.StringVar()
-            self.new_item_id = tk.StringVar()
-            self.new_item_price = tk.StringVar()
-            self.item_discount_price = tk.StringVar()
+            new_shipment_screen = tk.Toplevel(self.master)
+            new_shipment_screen.title("Ny varemodtagelse")
+            new_shipment_screen.geometry("300x250")
 
-            new_item_screen = tk.Toplevel(self.master)
-            new_item_screen.title("Ny vare")
-            new_item_screen.geometry("300x250")
+            tk.Button(new_shipment_screen, text="Godkend varemodtagelse", width=10, height=1, command=self.new_item_add).pack()
 
-            tk.Label(new_item_screen, text="Varenavn * ").pack()
-            self.new_item_entry = tk.Entry(new_item_screen, textvariable=self.new_item_name)
-            self.new_item_entry.pack()
-
-            tk.Label(new_item_screen, text="VareID * ").pack()
-            self.new_item_id_entry = tk.Entry(new_item_screen, textvariable=self.new_item_id)
-            self.new_item_id_entry.pack()
-
-            tk.Label(new_item_screen, text="Varens pris * ").pack()
-            self.new_item_price_entry = tk.Entry(new_item_screen, textvariable=self.new_item_price)
-            self.new_item_price_entry.pack()
-
-            tk.Label(new_item_screen, text="Varens udsalgspris * ").pack()
-            self.item_discount_entry = tk.Entry(new_item_screen, textvariable=self.item_discount_price)
-            self.item_discount_entry.pack()
-
-            tk.Button(new_item_screen, text="Opret vare", width=10, height=1, command=self.new_item_add).pack()
-
-
+    def new_shipment_verify(self):
+        pass
+        
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
         admin_fane = ttk.Frame(self.tabs)
