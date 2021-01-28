@@ -71,8 +71,14 @@ class supermarket_gui(ttk.Frame):
         self.new_item_price = tk.Entry(new_item_screen, textvariable=self.new_item_price_price)
         self.new_item_price.pack()
 
-        tk.Button(new_item_screen, text="Opret vare", width=10, height=1, command=self.do_nothing).pack()
+        tk.Button(new_item_screen, text="Opret vare", width=10, height=1, command=self.new_item_add).pack()
 
+    def new_item_add(self):
+            item_name = self.new_item_name_name.get()
+            item_id = self.new_item_id.get()
+            item_price = self.new_item_price_price.get()
+            print(item_name, item_id, item_price)
+            
     def build_GUI(self):
         self.tabs = ttk.Notebook(self)
         admin_fane = ttk.Frame(self.tabs)
