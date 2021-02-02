@@ -201,7 +201,7 @@ class supermarket_gui(ttk.Frame):
 
         self.trans_view = ttk.Treeview(stock_dat_frame, column=("column1", "column2", "column3", "column4", "column5", "column6"), selectmode='none', height=10)
         self.trans_view.bind("<ButtonRelease-1>")
-        self.trans_view.heading("#1", text="id", anchor='center')
+        self.trans_view.heading("#1", text="Vare_ID", anchor='center')
         self.trans_view.column("#1",minwidth=0,width=80, stretch=tk.NO)
         self.trans_view.heading("#2", text="Vare", anchor='center')
         self.trans_view.column("#2",minwidth=0,width=80, stretch=tk.NO)
