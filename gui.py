@@ -139,7 +139,7 @@ class supermarket_gui(ttk.Frame):
         stock_fane = ttk.Frame(self.tabs)
 
         self.tabs.add(admin_fane, text='Administrator')
-        self.tabs.add(sim_fane, text='Simulering')
+        #self.tabs.add(sim_fane, text='Økonomi')
         self.tabs.add(stock_fane, text='Lager')
 
         right_frame = ttk.Frame(admin_fane)
