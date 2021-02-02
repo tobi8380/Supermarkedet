@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 
 class Item:
-    def __init__(self, name, price, item_id, discount_price, discount=False, stock=0):
+    def __init__(self, name, item_id, price, discount_price, discount=False, stock=0):
         """
         Husk try except ved instans af item
         """
@@ -15,9 +15,9 @@ class Item:
             raise Exception("Prøver du at gøre vores produkter gratis kælling?")
 
         self.name = name
+        self.item_id = Item_id(item_id)
         self.price = price
         self.discount_price = price
-        self.item_id = Item_id(item_id)
         self.discount = discount
         self.stock = stock
 
@@ -74,11 +74,21 @@ class Super_data:
             db.close()
 
     def get_item_list(self):
-        pass
+        c = self._get_db().cursor()
+        c.execute("SELECT * FROM items")
+        rows = c.fetchall()
+        item_list = []
+        for row in rows:
+            new_item = Item(row[1], row[2], row[3], row[4], discount=row[5], stock=row[6])
+            item_list.append(new_item)
+
+        print(item_list)
+        return item_list
 
 
     def register_item(self, item):
-        c = self._get_db().cursor()
+        db = self._get_db()
+        c = db.cursor()
         c.execute("SELECT * FROM items WHERE item_id = ?", (item.item_id.id,))
         found_item = c.fetchone()
         if found_item:
@@ -90,13 +100,13 @@ class Super_data:
                             price,
                             discount_price,
                             discount,
-                            stock) VALUES (?,?,?,?,?,?)""",
+                            stock) VALUES (?,?,?,?,?,?)""", (
                             item.name,
                             item.item_id.id,
                             item.price,
                             item.discount_price,
                             item.discount,
-                            item.stock)
+                            item.stock))
             db.commit()
             res = True
         return res
@@ -169,8 +179,7 @@ class Super_data:
                 price REAL,
                 discount_price REAL,
                 discount INTEGER,
-                stock INTEGER,
-                );""")
+                stock INTEGER);""")
         except Exception as e:
             print(e)
 

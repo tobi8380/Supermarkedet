@@ -12,12 +12,23 @@ class supermarket_gui(ttk.Frame):
     def __init__(self, master=None):
         ttk.Frame.__init__(self, master)
 
-        logged_in = False
+        # logged_in = False
+        #
+        # if logged_in == True:
+        #     self.build_GUI()
+        # else:
+        self.login_gui()
 
-        if logged_in == True:
-            self.build_GUI()
-        else:
-            self.login_gui()
+
+    def opdater_tabel(self):
+        l = super_data.get_item_list()
+        # self.db_view.delete(*self.db_view.get_children())
+        # for i in l:
+        #     self.db_view.insert("", tk.END, values=(i.item_id.id, i.name, i.stock, i.price, i.discount_price, i.discount))
+        self.trans_view.delete(*self.trans_view.get_children())
+        for i in l:
+            print(i.item_id.id, i.name, i.stock, i.price, i.discount_price, i.discount)
+            self.trans_view.insert("", tk.END, values=(i.item_id.id, i.name, i.stock, i.price, i.discount_price, i.discount))
 
     def login_gui(self):
         login_screen = tk.Toplevel(self.master)
@@ -44,6 +55,7 @@ class supermarket_gui(ttk.Frame):
         self.current_user_position = super_data.login_success(username, password)
         if self.current_user_position != None:
             self.build_GUI()
+            self.opdater_tabel()
         else:
             print("incorrect credentials")
 
@@ -85,8 +97,10 @@ class supermarket_gui(ttk.Frame):
             item_id = self.new_item_id.get()
             item_discount_price = int(self.item_discount_price.get())
 
-            Item(item_name, item_price, item_id, item_discount_price)
+            new_item = Item(item_name, item_id, item_price, item_discount_price)
+            super_data.register_item(new_item)
             print(item_name, item_id, item_price, item_discount_price)
+            self.opdater_tabel()
 
     def new_shipment(self):
             print('new shipment')
